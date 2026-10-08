@@ -30,6 +30,39 @@ THEMES = {
 # Comparable 6-month periods; the first (May 2022) and last (Nov 2023) months are partial and excluded.
 PERIODS = {"Jun-Nov 2022": ("2022-06", "2022-11"), "May-Oct 2023": ("2023-05", "2023-10")}
 
+# Volume spikes found in exploratory analysis (code-defined windows; numbers are recomputed from the data).
+BOYCOTT_TERMS = ("sweden", "swedish", "quran", "koran", "boycott", "islam", "muslim")
+UPDATE_TERMS = ("update", "version", "new ui", "new design")
+
+
+def spike_events(con):
+    def kw(col_terms):
+        return " OR ".join(f"lower(review_text) LIKE '%{t}%'" for t in col_terms)
+    outside = "status='completed' AND intent IN ('complaint','cancellation') AND topic IN ('other','catalog')"
+    days = con.execute("SELECT COUNT(DISTINCT substr(review_timestamp,1,10)) FROM records").fetchone()[0]
+    total = con.execute("SELECT COUNT(*) FROM records").fetchone()[0]
+    jul = con.execute(f"SELECT COUNT(*), SUM({kw(BOYCOTT_TERMS)}) FROM records WHERE substr(review_timestamp,1,10)"
+                      " BETWEEN '2023-07-06' AND '2023-07-09'").fetchone()
+    jul_out = con.execute(f"SELECT COUNT(*) FROM records WHERE {outside} AND substr(review_timestamp,1,10)"
+                          " BETWEEN '2023-07-06' AND '2023-07-09'").fetchone()[0]
+    octo = con.execute(f"SELECT COUNT(*), SUM({kw(UPDATE_TERMS)}) FROM records WHERE {outside}"
+                       " AND substr(review_timestamp,1,7)='2023-10'").fetchone()
+    base = con.execute(f"SELECT COUNT(*), SUM({kw(UPDATE_TERMS)}) FROM records WHERE {outside}"
+                       " AND substr(review_timestamp,1,7) BETWEEN '2023-01' AND '2023-06'").fetchone()
+    return {
+        "note": "Outside-area complaints are concentrated in two events. Keyword matches are a lower bound "
+                "(many reviews are one-line insults without a stated reason); the external cause is not in the data.",
+        "average_reviews_per_day_whole_period": round(total / days),
+        "Jul 6-9 2023": {"reviews": jul[0], "outside_area_complaints": jul_out,
+                         "reviews_mentioning_sweden_quran_islam_or_boycott": jul[1],
+                         "reading": "short coordinated one-line complaints (review bombing) consistent with a boycott campaign"},
+        "Oct 2023": {"outside_area_complaints": octo[0],
+                     "share_mentioning_update_or_version": pct(octo[1], octo[0]),
+                     "same_share_Jan_Jun_2023": pct(base[1], base[0]),
+                     "reading": "backlash against an app update without a specific defect named"},
+    }
+
+
 UUID = re.compile(r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}")
 CLAIM = re.compile(r"\[(C\d{3})\]")
 ISSUE = re.compile(r"ISS-[a-z]+-[a-z_]+")
@@ -113,6 +146,7 @@ def build_pack(con, ranking, issues, claims, verify_report, records_counts):
             "note": "The shared taxonomy files Premium-locked controls and paywalls under billing but shuffle/skip limits "
                     "and ads under usability; these code-defined themes add up the related issues across areas.",
             **themes},
+        "volume_spikes": spike_events(con),
         "trend_comparable_periods": {
             "note": "Shares among completed reviews in two comparable 6-month windows; first and last calendar months "
                     "of the data are partial and excluded. Review volume is self-selected and varies by month.",

@@ -320,3 +320,30 @@ Neither change alters any label.
 - **$13.31**: enrich $13.23, verify $0.04, memo $0.03, group $0.003.
 - The 10k-checkpoint estimate was $13.16, so the actual came in about 1% over.
 - 52% of enrichment input tokens were billed at the cached rate (provider prompt caching).
+
+## D13: Volume-spike analysis and dashboard period colors (2026-10-08, after reviewing the live dashboard)
+
+**Question raised while reviewing the dashboard:** why did "outside the four areas" rise from 17.0% to 46.4% of complaints between the comparable windows? Exploratory SQL on the saved records gave the answer.
+
+- **Jul 6–9, 2023:**
+  - 36,509 reviews in 4 days, against an average of 1,206 per day. July 7 alone had about 11,600 outside-area complaints.
+  - Mostly one-line insults ("Hate this application 👎" ×1,415, "I hate this app" ×1,153).
+  - 3,020 reviews mention Sweden, the Quran, Islam or a boycott.
+  - Only about 1% of these complaints mention an update.
+  - Consistent with a coordinated boycott campaign (review bombing).
+- **Oct 2023:**
+  - 26,095 outside-area complaints, spread across the month.
+  - 41.1% mention "update"/"version" (12.6% in Jan–Jun 2023). Top texts: "Worst update", "New update sucks".
+  - Consistent with an update backlash in which reviewers named no specific defect.
+
+**Changes:**
+1. `memo.spike_events()` adds these code-computed numbers to the evidence pack (`volume_spikes`).
+2. Memo prompt **v2** adds one instruction: explain the spikes in Limitations, using "consistent with" wording.
+   - Run `full-final-v5` (pack only, prompt v1): the memo mentioned the spikes only vaguely.
+   - Run `full-final-v6` (prompt v2): the memo explains them with numbers. Check passed. $0.017.
+   - Ranking, claims, membership and issues are byte-identical to v4. Only the memo changed.
+3. Dashboard:
+   - Whole-period charts use a neutral gray and an "All 18 months" tag. Before, they used the same blue as the "Jun–Nov 2022" series, which made the issue ranking look period-specific.
+   - The trend chart now explains both spikes.
+
+**Implication:** the later window's four-area shares are diluted by these events. The four-area comparison (e.g. billing/support rising from 11.1% to 20.6%) is more informative than the "outside" share.

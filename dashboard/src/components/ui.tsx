@@ -41,7 +41,7 @@ export function Tile({ label, value, sub }: { label: string; value: ReactNode; s
 }
 
 /** Single-series horizontal bars (one hue, no legend); hover shows the exact values. */
-export function Bars({ rows, color = "var(--series-1)" }: {
+export function Bars({ rows, color = "var(--series-all)" }: {
   rows: { label: ReactNode; value: number; display: string; tip: string; href?: string }[];
   color?: string;
 }) {

@@ -9,6 +9,7 @@
   --accent: #2a78d6;
   --series-1: #2a78d6;
   --series-2: #eb6834;
+  --series-all: #6b6a65;
   --track: #ecebe6;
   --chip: #eef4fc;
   --chip-text: #1c5cab;
@@ -28,6 +29,7 @@
     --accent: #3987e5;
     --series-1: #3987e5;
     --series-2: #d95926;
+    --series-all: #a3a29b;
     --track: #2a2a28;
     --chip: #1d2c40;
     --chip-text: #9ec5f4;
@@ -47,6 +49,7 @@
   --accent: #3987e5;
   --series-1: #3987e5;
   --series-2: #d95926;
+  --series-all: #a3a29b;
   --track: #2a2a28;
   --chip: #1d2c40;
   --chip-text: #9ec5f4;
@@ -108,7 +111,7 @@ th { text-align: left; color: var(--text-secondary); font-weight: 600; border-bo
 td { border-bottom: 1px solid var(--border); padding: 8px 6px; vertical-align: top; }
 td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .table-wrap { overflow-x: auto; }
-.inline-bar { height: 8px; background: var(--series-1); border-radius: 0 3px 3px 0; min-width: 2px; }
+.inline-bar { height: 8px; background: var(--series-all); border-radius: 0 3px 3px 0; min-width: 2px; }
 
 .memo h1 { font-size: 18px; margin: 0 0 8px; }
 .memo h2 { font-size: 15px; margin: 18px 0 6px; }
@@ -126,3 +129,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .kv dt { color: var(--text-secondary); }
 .kv dd { margin: 0; }
 @media (max-width: 600px) { .kv { grid-template-columns: 1fr; } .bar-row { grid-template-columns: 110px 1fr auto; } }
+.period { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .02em; color: var(--text-secondary);
+  border: 1px solid var(--border); border-radius: 999px; padding: 1px 8px; margin-left: 8px; vertical-align: 2px; }
+.spikes { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 13px; color: var(--text-secondary); }
+.spikes strong { color: var(--text-primary); }

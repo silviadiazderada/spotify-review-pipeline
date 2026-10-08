@@ -40,7 +40,7 @@ GROUP_EXAMPLES_PER_ISSUE = 12
 # --- Memo role (one call over saved aggregates + bounded evidence pack) ---
 MEMO_MODEL = "gpt-6.1-sol"
 MEMO_EFFORT = "low"
-MEMO_PROMPT_VERSION = "memo-v1"
+MEMO_PROMPT_VERSION = "memo-v2"  # v2 (2026-10-08): explain volume spikes in Limitations
 MEMO_TOP_ISSUES = 8
 MEMO_MAX_OUTPUT_TOKENS = 6000
 

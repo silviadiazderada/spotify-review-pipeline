@@ -12,6 +12,9 @@ type Overview = {
     complaints_share_of_completed: string;
     cancellation_intent_records: number;
     cross_area_themes?: Record<string, { complaint_records: number; severity_sum: number; share_of_complaints: string; issues: string[] } | string>;
+    volume_spikes?: { average_reviews_per_day_whole_period: number;
+      "Jul 6-9 2023": { reviews: number; outside_area_complaints: number; reviews_mentioning_sweden_quran_islam_or_boycott: number };
+      "Oct 2023": { outside_area_complaints: number; share_mentioning_update_or_version: string; same_share_Jan_Jun_2023: string } };
     trend_comparable_periods?: Record<string, { completed_reviews: number; complaint_records: number; complaint_share_of_reviews: string; area_share_of_complaints: Record<string, string> } | string>;
   } | null;
   cost: { by_run: { run_id: string; role: string; calls: number; failed: number; cost_usd: number }[] } | null;
@@ -63,7 +66,7 @@ export default function OverviewPage() {
 
       <div className="grid2">
         <section className="card">
-          <h2>Complaint burden by decision area</h2>
+          <h2>Complaint burden by decision area<span className="period">All 18 months</span></h2>
           <p className="note">Severity-weighted complaints (sum of 1–5 severity over complaint and cancellation reviews).</p>
           <Bars rows={d.areas.filter((a) => a.area).map((a) => ({
             label: a.area, value: a.severity_sum, display: fmt(a.severity_sum),
@@ -71,9 +74,9 @@ export default function OverviewPage() {
           }))} />
         </section>
         <section className="card">
-          <h2>Cross-area themes</h2>
+          <h2>Cross-area themes<span className="period">All 18 months</span></h2>
           <p className="note">The shared taxonomy splits free-tier restrictions between billing and usability; these totals add them up.</p>
-          <Bars color="var(--series-1)" rows={themes.map(([k, t]) => ({
+          <Bars rows={themes.map(([k, t]) => ({
             label: k.replace(/_/g, " "), value: t.severity_sum, display: t.share_of_complaints,
             tip: `${fmt(t.complaint_records)} complaints (${t.share_of_complaints} of all), severity sum ${fmt(t.severity_sum)}`,
           }))} />
@@ -92,11 +95,29 @@ export default function OverviewPage() {
           <PairBars series={[periods[0][0], periods[1][0]]} rows={areaNames.map((a) => ({
             label: a, a: pctNum(periods[0][1].area_share_of_complaints[a]), b: pctNum(periods[1][1].area_share_of_complaints[a]),
           }))} />
+          {d.pack?.volume_spikes && (() => {
+            const v = d.pack.volume_spikes!, j = v["Jul 6-9 2023"], o = v["Oct 2023"];
+            return (
+              <div className="spikes">
+                <strong>Why “outside the four areas” jumped:</strong> two events, both in the later window.
+                <ul>
+                  <li><strong>Jul 6–9, 2023:</strong> {fmt(j.reviews)} reviews in 4 days (average {fmt(v.average_reviews_per_day_whole_period)}/day),
+                    {" "}{fmt(j.outside_area_complaints)} of them generic complaints (“Hate this application”, “Worst app”);
+                    {" "}{fmt(j.reviews_mentioning_sweden_quran_islam_or_boycott)} mention Sweden, the Quran, Islam or a boycott — consistent with a
+                    coordinated boycott campaign (review bombing), not a product change.</li>
+                  <li><strong>Oct 2023:</strong> {fmt(o.outside_area_complaints)} generic complaints; {o.share_mentioning_update_or_version} mention an
+                    “update” or “version” (vs {o.same_share_Jan_Jun_2023} in Jan–Jun 2023) — consistent with a backlash against an app update
+                    that reviewers did not tie to a specific defect.</li>
+                </ul>
+                Keyword counts are lower bounds; the external causes are not in the data.
+              </div>
+            );
+          })()}
         </section>
       )}
 
       <section className="card">
-        <h2>Top issues by priority score</h2>
+        <h2>Top issues by priority score<span className="period">All 18 months</span></h2>
         <p className="note">Baseline ranking: priority = complaint count × mean severity = severity sum. <Link href="/issues">Full ranking →</Link></p>
         {iss.data ? (
           <Bars rows={iss.data.issues.slice(0, 10).map((i) => ({

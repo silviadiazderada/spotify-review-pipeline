@@ -35,13 +35,13 @@ export default function View() {
       </section>
       <div className="grid2">
         <section className="card">
-          <h2>Severity distribution</h2>
+          <h2>Severity distribution<span className="period">All 18 months</span></h2>
           <p className="note">1 = no problem … 4 = core task blocked, 5 = financial/privacy/data harm.</p>
           <Bars rows={data.severity.map((s) => ({ label: `Severity ${s.severity}`, value: s.n, display: fmt(s.n),
             tip: `${fmt(s.n)} reviews at severity ${s.severity}` }))} />
         </section>
         <section className="card">
-          <h2>Complaints per month</h2>
+          <h2>Complaints per month<span className="period">May 2022 – Nov 2023</span></h2>
           <p className="note">Raw counts; review volume itself varies by month (May 2022 and Nov 2023 are partial).</p>
           <Bars rows={data.monthly.map((m) => ({ label: m.month, value: m.n, display: fmt(m.n), tip: `${m.month}: ${fmt(m.n)} complaints` }))} />
         </section>

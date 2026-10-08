@@ -1,0 +1,449 @@
+{
+  "scope": {
+    "source_rows": 660622,
+    "completed_classifications": 660600,
+    "not_classified": 22,
+    "record_status": {
+      "completed": 660600,
+      "quarantined:invalid_model_output_after_retry": 9,
+      "quarantined:empty_review_text": 13
+    },
+    "first_review": "2022-05-17 00:01:07",
+    "last_review": "2023-11-15 23:16:10"
+  },
+  "intent_counts": {
+    "complaint": 266817,
+    "praise": 286883,
+    "request": 17086,
+    "cancellation": 30164,
+    "unclear": 59650
+  },
+  "complaint_and_cancellation_records": 296981,
+  "complaints_share_of_completed": "45.0%",
+  "cancellation_intent_records": 30164,
+  "decision_areas": {
+    "playback": {
+      "complaint_records": 45844,
+      "severity_sum": 151675,
+      "share_of_complaints": "15.4%"
+    },
+    "billing/support": {
+      "complaint_records": 52582,
+      "severity_sum": 149237,
+      "share_of_complaints": "17.7%"
+    },
+    "outside the four areas": {
+      "complaint_records": 107089,
+      "severity_sum": 232702,
+      "share_of_complaints": "36.1%"
+    },
+    "usability": {
+      "complaint_records": 81280,
+      "severity_sum": 206128,
+      "share_of_complaints": "27.4%"
+    },
+    "access": {
+      "complaint_records": 10186,
+      "severity_sum": 39433,
+      "share_of_complaints": "3.4%"
+    }
+  },
+  "ranking_rule": "priority_score = complaint_count x mean_severity = severity_sum; one issue per complaint",
+  "issues_ranked_total": 40,
+  "top_issues": [
+    {
+      "rank": 1,
+      "issue_id": "ISS-other-general",
+      "name": "Mixed General App Complaints",
+      "description": "Mixed generic complaints about the app, updates, and overall experience without a specific defect.",
+      "decision_area": "outside the four areas",
+      "complaint_count": {
+        "value": "88142",
+        "claim_id": "C001"
+      },
+      "severity_sum": {
+        "value": "179259",
+        "claim_id": "C002"
+      },
+      "mean_severity": {
+        "value": "2.033752",
+        "claim_id": "C003"
+      },
+      "priority_score": {
+        "value": "179259",
+        "claim_id": "C004"
+      },
+      "evidence": [
+        {
+          "review_id": "e8273497-06d8-4f7f-a8d7-b51e5873fd64",
+          "quote": "New update 😞",
+          "severity": 2
+        },
+        {
+          "review_id": "54c143cd-66a8-4935-85e7-acc012e4af60",
+          "quote": "App's not perfect. Still got a long way to go.",
+          "severity": 2
+        },
+        {
+          "review_id": "51886740-111a-4006-a56a-3a9dab9954e2",
+          "quote": "i uninstalled this app",
+          "severity": 2
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "issue_id": "ISS-billing-basic_features_paywalled",
+      "name": "Basic Features Behind Premium",
+      "description": "Customers say music playback, downloads, and other expected features require a paid subscription.",
+      "decision_area": "billing/support",
+      "complaint_count": {
+        "value": "29166",
+        "claim_id": "C005"
+      },
+      "severity_sum": {
+        "value": "81875",
+        "claim_id": "C006"
+      },
+      "mean_severity": {
+        "value": "2.807207",
+        "claim_id": "C007"
+      },
+      "priority_score": {
+        "value": "81875",
+        "claim_id": "C008"
+      },
+      "evidence": [
+        {
+          "review_id": "c917e047-2d4b-41c5-ad41-bc9355b6d6e4",
+          "quote": "requires only premium users and force users to pay user subscription",
+          "severity": 3
+        },
+        {
+          "review_id": "9b42b7f8-2477-4516-b2de-6d46831fbad9",
+          "quote": "cut down d basic feature of playing songs in order and limiting it to premium users",
+          "severity": 3
+        },
+        {
+          "review_id": "32593aa6-298e-4b3a-a0f2-5b65d567a86e",
+          "quote": "we literally have to pay for everything",
+          "severity": 3
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "issue_id": "ISS-usability-ads",
+      "name": "Too Many Interruptive Ads",
+      "description": "Customers find frequent, lengthy, or consecutive ads disruptive to listening.",
+      "decision_area": "usability",
+      "complaint_count": {
+        "value": "35283",
+        "claim_id": "C009"
+      },
+      "severity_sum": {
+        "value": "77553",
+        "claim_id": "C010"
+      },
+      "mean_severity": {
+        "value": "2.198027",
+        "claim_id": "C011"
+      },
+      "priority_score": {
+        "value": "77553",
+        "claim_id": "C012"
+      },
+      "evidence": [
+        {
+          "review_id": "25b3b4c8-151c-4bc7-8c0a-9df1062ae76c",
+          "quote": "upwards of 4 ads, each 30 seconds long, all unskippable",
+          "severity": 2
+        },
+        {
+          "review_id": "92bd7ff4-4322-4406-9033-f13e3079aa74",
+          "quote": "there are too many ads",
+          "severity": 2
+        },
+        {
+          "review_id": "63eb97a3-0e84-4b30-9d8f-b0ba12cfc853",
+          "quote": "ads after every song",
+          "severity": 3
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "issue_id": "ISS-usability-shuffle_skip_limits",
+      "name": "Shuffle and Skip Restrictions",
+      "description": "Customers report forced shuffle, limited skips, repeated tracks, and difficulty controlling playback order.",
+      "decision_area": "usability",
+      "complaint_count": {
+        "value": "14513",
+        "claim_id": "C013"
+      },
+      "severity_sum": {
+        "value": "42713",
+        "claim_id": "C014"
+      },
+      "mean_severity": {
+        "value": "2.943086",
+        "claim_id": "C015"
+      },
+      "priority_score": {
+        "value": "42713",
+        "claim_id": "C016"
+      },
+      "evidence": [
+        {
+          "review_id": "e7747485-42c5-4bb9-b1e2-1b4044eedb5a",
+          "quote": "wouldnt even let us shuffle, play previous track, repeat a single song back to back",
+          "severity": 3
+        },
+        {
+          "review_id": "54dca140-19f7-4c8c-a176-19fcdeef283d",
+          "quote": "same 4 songs playing on repeat frequently",
+          "severity": 3
+        },
+        {
+          "review_id": "ae776e66-d026-4313-a3d9-c7f5c34c4f6f",
+          "quote": "No option for turn off shuffle",
+          "severity": 3
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "issue_id": "ISS-billing-premium_only_controls",
+      "name": "Playback Controls Require Premium",
+      "description": "Customers say features such as seeking, repeat, shuffle control, and choosing tracks are restricted to Premium.",
+      "decision_area": "billing/support",
+      "complaint_count": {
+        "value": "11415",
+        "claim_id": "C017"
+      },
+      "severity_sum": {
+        "value": "34374",
+        "claim_id": "C018"
+      },
+      "mean_severity": {
+        "value": "3.011301",
+        "claim_id": "C019"
+      },
+      "priority_score": {
+        "value": "34374",
+        "claim_id": "C020"
+      },
+      "evidence": [
+        {
+          "review_id": "5332a9f1-d7ff-4062-ad9f-47cd3cc7bacc",
+          "quote": "If you want to rewind the song, you have to use premium",
+          "severity": 3
+        },
+        {
+          "review_id": "baa39929-9b20-4027-88df-a2ecb7d4552d",
+          "quote": "you cant turn off shuffle without premium",
+          "severity": 3
+        },
+        {
+          "review_id": "1e8df7c6-5da1-4002-ab42-9b38b3d96014",
+          "quote": "We can't play the specific part unless we upgrade into premium users",
+          "severity": 3
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "issue_id": "ISS-playback-general",
+      "name": "General Playback Problems",
+      "description": "Customers report varied problems opening the app or playing music and podcasts.",
+      "decision_area": "playback",
+      "complaint_count": {
+        "value": "9659",
+        "claim_id": "C021"
+      },
+      "severity_sum": {
+        "value": "31948",
+        "claim_id": "C022"
+      },
+      "mean_severity": {
+        "value": "3.307589",
+        "claim_id": "C023"
+      },
+      "priority_score": {
+        "value": "31948",
+        "claim_id": "C024"
+      },
+      "evidence": [
+        {
+          "review_id": "45e2aab4-449c-4c23-83d0-69bd568a9e08",
+          "quote": "these weird songs start playing",
+          "severity": 3
+        },
+        {
+          "review_id": "c2c38440-5dce-479b-aac4-e336b0d8cb79",
+          "quote": "2023 suddenly off",
+          "severity": 4
+        },
+        {
+          "review_id": "ec296b31-61cb-4588-ba80-e8ab992b2281",
+          "quote": "Your app is suppose to stay on when you go on another app and is not letting me",
+          "severity": 3
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "issue_id": "ISS-playback-crashes_wont_open",
+      "name": "Crashes and App Won't Open",
+      "description": "Customers report crashes, black screens, loading problems, and the app closing during use.",
+      "decision_area": "playback",
+      "complaint_count": {
+        "value": "7779",
+        "claim_id": "C025"
+      },
+      "severity_sum": {
+        "value": "27915",
+        "claim_id": "C026"
+      },
+      "mean_severity": {
+        "value": "3.588508",
+        "claim_id": "C027"
+      },
+      "priority_score": {
+        "value": "27915",
+        "claim_id": "C028"
+      },
+      "evidence": [
+        {
+          "review_id": "d800791c-bf52-40e0-8ee9-5397a32120a7",
+          "quote": "I pay $10 per month for a working app that i can listen to music too. Not an app that crashes and takes forever to load up. Can you fix this?",
+          "severity": 4
+        },
+        {
+          "review_id": "b6581f85-47d4-4ab7-98e9-b40b04e64942",
+          "quote": "crash",
+          "severity": 4
+        },
+        {
+          "review_id": "ed7146ef-69ee-43b9-9e90-dbcec01d809f",
+          "quote": "while playing it crashed 3 times",
+          "severity": 3
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "issue_id": "ISS-usability-general",
+      "name": "Mixed Usability Complaints",
+      "description": "Mixed complaints about ads, navigation, playback choice, and app usability without a single specific defect.",
+      "decision_area": "usability",
+      "complaint_count": {
+        "value": "10164",
+        "claim_id": "C029"
+      },
+      "severity_sum": {
+        "value": "25961",
+        "claim_id": "C030"
+      },
+      "mean_severity": {
+        "value": "2.554211",
+        "claim_id": "C031"
+      },
+      "priority_score": {
+        "value": "25961",
+        "claim_id": "C032"
+      },
+      "evidence": [
+        {
+          "review_id": "416a5ab7-fe92-487a-aabd-bfb1080edd4d",
+          "quote": "Lots of add 😮‍💨",
+          "severity": 2
+        },
+        {
+          "review_id": "d78b88f0-d337-402a-a078-e11fc0a58e2c",
+          "quote": "adssssssssss",
+          "severity": 2
+        },
+        {
+          "review_id": "f4ba7c67-5447-4a14-a1cd-992903c33806",
+          "quote": "all the commas missing in play counts on the artist page",
+          "severity": 2
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "sampled": 2000,
+    "verified": 2000,
+    "agreement": {
+      "intent": 0.944,
+      "topic": 0.8665,
+      "severity": 0.899
+    },
+    "severity_mae": 0.1135
+  },
+  "cross_area_themes": {
+    "note": "The shared taxonomy files Premium-locked controls and paywalls under billing but shuffle/skip limits and ads under usability; these code-defined themes add up the related issues across areas.",
+    "free_tier_restrictions": {
+      "issues": [
+        "ISS-billing-premium_only_controls",
+        "ISS-billing-basic_features_paywalled",
+        "ISS-usability-shuffle_skip_limits"
+      ],
+      "complaint_records": 55094,
+      "severity_sum": 158962,
+      "share_of_complaints": "18.6%"
+    },
+    "ads": {
+      "issues": [
+        "ISS-usability-ads"
+      ],
+      "complaint_records": 35283,
+      "severity_sum": 77553,
+      "share_of_complaints": "11.9%"
+    }
+  },
+  "volume_spikes": {
+    "note": "Outside-area complaints are concentrated in two events. Keyword matches are a lower bound (many reviews are one-line insults without a stated reason); the external cause is not in the data.",
+    "average_reviews_per_day_whole_period": 1206,
+    "Jul 6-9 2023": {
+      "reviews": 36509,
+      "outside_area_complaints": 24494,
+      "reviews_mentioning_sweden_quran_islam_or_boycott": 3020,
+      "reading": "short coordinated one-line complaints (review bombing) consistent with a boycott campaign"
+    },
+    "Oct 2023": {
+      "outside_area_complaints": 26095,
+      "share_mentioning_update_or_version": "41.1%",
+      "same_share_Jan_Jun_2023": "12.6%",
+      "reading": "backlash against an app update without a specific defect named"
+    }
+  },
+  "trend_comparable_periods": {
+    "note": "Shares among completed reviews in two comparable 6-month windows; first and last calendar months of the data are partial and excluded. Review volume is self-selected and varies by month.",
+    "Jun-Nov 2022": {
+      "completed_reviews": 175703,
+      "complaint_records": 54372,
+      "complaint_share_of_reviews": "30.9%",
+      "area_share_of_complaints": {
+        "access": "3.7%",
+        "billing/support": "11.1%",
+        "outside the four areas": "17.0%",
+        "playback": "28.8%",
+        "usability": "39.5%"
+      }
+    },
+    "May-Oct 2023": {
+      "completed_reviews": 301425,
+      "complaint_records": 168398,
+      "complaint_share_of_reviews": "55.9%",
+      "area_share_of_complaints": {
+        "access": "3.4%",
+        "billing/support": "20.6%",
+        "outside the four areas": "46.4%",
+        "playback": "9.0%",
+        "usability": "20.7%"
+      }
+    }
+  }
+}

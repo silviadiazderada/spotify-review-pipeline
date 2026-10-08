@@ -21,7 +21,7 @@ The recommendation comes from a multi-agent pipeline that classified **660,600 o
 | Quarantined | 13 `empty_review_text` + 9 `invalid_model_output_after_retry` | [failure case below](#one-failed-case) |
 | Exact-text reuse | 176,420 rows (27%) reused a validated result. Model work drops from 660,609 to **484,189** distinct texts. The checker confirms all 176,420 reuses as valid. | `cache_source_id` in records |
 | Golden-50 agreement (human labels) | intent **84%**, topic **70%**, severity **74%** (MAE 0.32), sentiment **92%** within ±0.5, quotes 50/50 exact | [`evals/golden_eval/`](evals/golden_eval/) |
-| Independent verifier (2,000 random texts) | intent **94.4%**, topic **86.7%**, severity **89.9%** (MAE 0.11). 464 texts with any disagreement. | [`runs/full-final-v4/verify_report.json`](runs/full-final-v4/verify_report.json) |
+| Independent verifier (2,000 random texts) | intent **94.4%**, topic **86.7%**, severity **89.9%** (MAE 0.11). 464 texts with any disagreement. | [`runs/full-final-v6/verify_report.json`](runs/full-final-v6/verify_report.json) |
 | System tests | planted errors 10/10 gross, 8/10 subtle · prompt injection 9/9 · failure paths 10/10 | [`evals/`](evals/) |
 | 100-review pilot (measured) | cold: **$0.0178**, 64.7 s · warm: **0 calls**, 0.51 s, byte-identical outputs | [`cost/report.md`](cost/report.md) |
 | Full run: estimate vs. actual | estimated **$13.16** (from the 10k checkpoint) · actual **$13.31** | [`cost/report.md` §3–4](cost/report.md) |
@@ -132,7 +132,7 @@ uv run python -m pipeline checkpoint --state state/run.sqlite --out checkpoint.j
 **Dashboard.**
 
 ```sh
-uv run python scripts/load_db.py --state state/full.sqlite --outputs runs/full-final-v4
+uv run python scripts/load_db.py --state state/full.sqlite --outputs runs/full-final-v6
 cd dashboard && npm install && npm run dev    # needs DATABASE_URL in dashboard/.env.local
 ```
 
@@ -144,10 +144,10 @@ cd dashboard && npm install && npm run dev    # needs DATABASE_URL in dashboard/
 |---|---|
 | **D1** Accessible code/setup and artifacts | This README · [`pyproject.toml`](pyproject.toml), [`uv.lock`](uv.lock) · [`.env.example`](.env.example) · offline commands above · [`grading/`](grading/) · [`cost/`](cost/) |
 | **D2** Architecture, shared schema, provenance | [Architecture](#architecture) · schema in [`pipeline/enrich.py`](pipeline/enrich.py) · `label_config` and `source_sha256` on every record · `cache_source_id` provenance · [`pipeline/config.py`](pipeline/config.py) versions |
-| **D3** Memo numbers linked to calculations and evidence | [`runs/full-final-v4/claims.csv`](runs/full-final-v4/claims.csv) · [`memo_check.json`](runs/full-final-v4/memo_check.json) (passed) · the checker recomputes every claim · [trace](#one-review-end-to-end) |
-| **D4** Recommendation, alternatives, limitations | [Decision memo](#decision-memo) · [`memo.md`](runs/full-final-v4/memo.md) · [Limitations](#limitations) |
+| **D3** Memo numbers linked to calculations and evidence | [`runs/full-final-v6/claims.csv`](runs/full-final-v6/claims.csv) · [`memo_check.json`](runs/full-final-v6/memo_check.json) (passed) · the checker recomputes every claim · [trace](#one-review-end-to-end) |
+| **D4** Recommendation, alternatives, limitations | [Decision memo](#decision-memo) · [`memo.md`](runs/full-final-v6/memo.md) · [Limitations](#limitations) |
 | **T1** 50 human labels, per-field results, error analysis | [`evals/golden_50_human.csv`](evals/golden_50_human.csv) · [`evals/golden_eval/report.md`](evals/golden_eval/report.md) · [`error_analysis.md`](evals/golden_eval/error_analysis.md) |
-| **T2** Independent verification, planted errors, injection | [`verify_report.json`](runs/full-final-v4/verify_report.json), [`verify_comparisons.csv`](runs/full-final-v4/verify_comparisons.csv) · [`evals/planted_error/`](evals/planted_error/) · [`evals/injection/`](evals/injection/) |
+| **T2** Independent verification, planted errors, injection | [`verify_report.json`](runs/full-final-v6/verify_report.json), [`verify_comparisons.csv`](runs/full-final-v6/verify_comparisons.csv) · [`evals/planted_error/`](evals/planted_error/) · [`evals/injection/`](evals/injection/) |
 | **T3** Real cold/warm pilot, calculator, retry/spend/recovery controls | [`cost/report.md`](cost/report.md), [`cost/README.md`](cost/README.md) · [`evals/failure_paths/`](evals/failure_paths/) · [resume video](evidence/resume_demo_redacted.mp4) |
 | **W1** Full ingestion, coverage, classification | [`grading/`](grading/) · [`evals/self-check.json`](evals/self-check.json) (coverage candidate 1.0) |
 | **W2** Staged program, bounded calls, saved handoffs, resume | [`pipeline/`](pipeline/) · [`grading/calls.jsonl`](grading/calls.jsonl) (≤50 IDs per enrich call) · `checkpoint_before/after.json` + video |
@@ -214,7 +214,7 @@ Other real failures, and how we handled them, are recorded in [D10–D12](docs/D
 
 ## Decision memo
 
-The memo is AI-written by `gpt-6.1-sol` from the saved aggregates only, and code-checked: [full text](runs/full-final-v4/memo.md). Every issue-level number cites a row of [`claims.csv`](runs/full-final-v4/claims.csv), which the course checker recomputes from the saved records.
+The memo is AI-written by `gpt-6.1-sol` from the saved aggregates only, and code-checked: [full text](runs/full-final-v6/memo.md). Every issue-level number cites a row of [`claims.csv`](runs/full-final-v6/claims.csv), which the course checker recomputes from the saved records.
 
 **Priority: usability.** Fix interruptive ads first, then shuffle and skip restrictions.
 
@@ -238,6 +238,8 @@ The memo is AI-written by `gpt-6.1-sol` from the saved aggregates only, and code
 
 Rank 1 is `ISS-other-general` (generic "worst app"-type complaints, 88,142, C001–C004). It has no specific defect to fix.
 
+**Volume spikes.** Two events explain most of the rise in "outside the four areas": a review-bombing burst on Jul 6–9, 2023 and an update backlash in Oct 2023. See [Limitations](#limitations); the memo explains both with code-computed numbers.
+
 **Alternatives.**
 - **Billing/support** has the single highest-scoring specific issue, the Premium paywall.
 - Its share of complaints **rose from 11.1% to 20.6%** between comparable windows:
@@ -257,7 +259,10 @@ Rank 1 is `ISS-other-general` (generic "worst app"-type complaints, 88,142, C001
   - The billing ↔ usability boundary is the weakest. Area totals shift if free-tier reviews move between them, which is why the cross-area theme is reported.
   - One issue per complaint hides multi-problem reviews.
 - **Issue grouping** uses versioned keyword rules ([`pipeline/issue_rules.py`](pipeline/issue_rules.py), `issues-v4`), tuned on development checkpoints. The "general" buckets remain large.
-- **Outside the four areas.** 36.1% of complaints are generic or unrelated. Their share rose from 17.0% to 46.4% between the windows, so the four-area answer does not explain all dissatisfaction.
+- **Outside the four areas.** 36.1% of complaints are generic or unrelated. Their share rose from 17.0% to 46.4% between the windows, driven by two events. The numbers below are computed in code ([`memo.py: spike_events`](pipeline/memo.py)):
+  - **Jul 6–9, 2023:** 36,509 reviews in 4 days, against an average of 1,206 per day. 24,494 of them are generic one-line complaints ("Hate this application 👎" ×1,415). 3,020 mention Sweden, the Quran, Islam or a boycott. This is consistent with a coordinated boycott campaign (review bombing), not a product change.
+  - **Oct 2023:** 26,095 generic complaints, 41.1% of which mention an "update" or "version" (12.6% in Jan–Jun 2023). This is consistent with a backlash against an app update that reviewers did not tie to a specific defect.
+  - Keyword counts are lower bounds, and the external causes are not in the data. Because of these events, the later window's area shares are diluted. The four-area comparison is more reliable than the "outside" share.
 - **22 rows are not classified** (13 empty, 9 invalid output). They are disclosed and not counted as successes.
 
 ---

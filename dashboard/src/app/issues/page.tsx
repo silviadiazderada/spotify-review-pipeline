@@ -12,7 +12,7 @@ export default function IssuesPage() {
   const max = Math.max(...data.issues.map((i) => i.priority_score));
   return (
     <main className="card">
-      <h2>Baseline issue ranking</h2>
+      <h2>Baseline issue ranking<span className="period">All 18 months</span></h2>
       <p className="note">Each complaint or cancellation review belongs to exactly one issue (topic + rule-based subtopic, assigned in code).
         priority_score = complaint_count × mean_severity = severity_sum; ties break by ascending issue ID. Reproducible offline with
         <code> python -m pipeline rank</code>.</p>
