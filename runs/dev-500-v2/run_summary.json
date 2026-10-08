@@ -1,0 +1,60 @@
+{
+  "run_id": "dev-500-v2",
+  "phase": "initial",
+  "input": "data/raw/checkpoint_500.csv",
+  "state": "state/dev500.sqlite",
+  "label_config": "gpt-6-luna+effort-none+enrich-v1+schema-v1",
+  "budget_usd": 0.2,
+  "workers": 1,
+  "wall_clock_s": 32.63,
+  "total_cost_usd": 0.015576,
+  "stop_reason": null,
+  "stages": {
+    "enrich": {
+      "seconds": 1.45,
+      "distinct_texts_to_call": 0,
+      "already_completed_same_config": 500,
+      "cache_hits_before_calls": 0,
+      "record_status": {
+        "completed": 500
+      },
+      "stop_reason": null,
+      "calls": 0,
+      "failed_calls": 0,
+      "cost_usd": 0
+    },
+    "verify": {
+      "seconds": 0.01,
+      "sampled": 96,
+      "verified": 96,
+      "calls": 0,
+      "failed_calls": 0,
+      "cost_usd": 0
+    },
+    "export_records": {
+      "seconds": 0.01,
+      "counts": {
+        "completed": 500
+      }
+    },
+    "group": {
+      "seconds": 13.16,
+      "issues": 28,
+      "members": 244,
+      "calls": 1,
+      "failed_calls": 0,
+      "cost_usd": 0.000808
+    },
+    "rank": {
+      "seconds": 0.01,
+      "issues_ranked": 28
+    },
+    "memo": {
+      "seconds": 17.99,
+      "check_passed": true,
+      "calls": 1,
+      "failed_calls": 0,
+      "cost_usd": 0.014768
+    }
+  }
+}

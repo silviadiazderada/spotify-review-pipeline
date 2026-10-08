@@ -1,0 +1,33 @@
+{
+  "run_id": "dev-10k-w8",
+  "phase": "initial",
+  "input": "data/raw/analysis_10000.csv",
+  "input_sha256": "eaa62ca6d44d717302904a9c922e99b0b4584d174309cb45295ecbc2ba2a91b5",
+  "label_config": "gpt-6-luna+effort-none+enrich-v1+schema-v1",
+  "batch_size": 50,
+  "workers": 8,
+  "budget_usd": 1.0,
+  "started_at": "2026-10-08T02:28:38.576+00:00",
+  "ingest": {
+    "rows": 10000,
+    "new": 0,
+    "empty_quarantined": 0
+  },
+  "already_completed_same_config": 2188,
+  "cache_hits_before_calls": 0,
+  "distinct_texts_to_call": 7448,
+  "finished_at": "2026-10-08T02:33:21.587+00:00",
+  "wall_clock_s": 283.01,
+  "stop_reason": null,
+  "record_status": {
+    "completed": 9949,
+    "quarantined": 51
+  },
+  "calls": 150,
+  "failed_calls": 2,
+  "cost_usd": 0.202757,
+  "input_tokens": 470693,
+  "cached_input_tokens": 229325,
+  "output_tokens": 352654,
+  "quote_fallbacks": 60
+}

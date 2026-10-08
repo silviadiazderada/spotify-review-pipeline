@@ -1,0 +1,383 @@
+{
+  "scope": {
+    "source_rows": 500,
+    "completed_classifications": 500,
+    "not_classified": 0,
+    "record_status": {
+      "completed": 500
+    },
+    "first_review": "2022-05-19 14:22:29",
+    "last_review": "2023-11-15 15:44:48"
+  },
+  "intent_counts": {
+    "praise": 217,
+    "complaint": 213,
+    "cancellation": 31,
+    "unclear": 29,
+    "request": 10
+  },
+  "complaint_and_cancellation_records": 244,
+  "complaints_share_of_completed": "48.8%",
+  "cancellation_intent_records": 31,
+  "decision_areas": {
+    "billing/support": {
+      "complaint_records": 43,
+      "severity_sum": 128,
+      "share_of_complaints": "17.6%"
+    },
+    "outside the four areas": {
+      "complaint_records": 78,
+      "severity_sum": 172,
+      "share_of_complaints": "32.0%"
+    },
+    "usability": {
+      "complaint_records": 70,
+      "severity_sum": 176,
+      "share_of_complaints": "28.7%"
+    },
+    "playback": {
+      "complaint_records": 45,
+      "severity_sum": 159,
+      "share_of_complaints": "18.4%"
+    },
+    "access": {
+      "complaint_records": 8,
+      "severity_sum": 30,
+      "share_of_complaints": "3.3%"
+    }
+  },
+  "ranking_rule": "priority_score = complaint_count x mean_severity = severity_sum; one issue per complaint",
+  "issues_ranked_total": 28,
+  "top_issues": [
+    {
+      "rank": 1,
+      "issue_id": "ISS-other-general",
+      "name": "Mixed Generic App Complaints",
+      "description": "Examples include a Wrap screen that will not open, missing features, and general dissatisfaction without a consistent specific defect.",
+      "decision_area": "outside the four areas",
+      "complaint_count": {
+        "value": "61",
+        "claim_id": "C001"
+      },
+      "severity_sum": {
+        "value": "126",
+        "claim_id": "C002"
+      },
+      "mean_severity": {
+        "value": "2.065574",
+        "claim_id": "C003"
+      },
+      "priority_score": {
+        "value": "126",
+        "claim_id": "C004"
+      },
+      "evidence": [
+        {
+          "review_id": "c1726764-f0ce-4abc-ad9e-6cd143e1b2c7",
+          "quote": "I can't open my spotify wrap 2022",
+          "severity": 4
+        },
+        {
+          "review_id": "02777996-211f-447b-94c4-99b61f049f78",
+          "quote": "some features are missing in updated version",
+          "severity": 3
+        },
+        {
+          "review_id": "45c561b9-cc47-4d80-95d3-f0d20bc84af3",
+          "quote": "Uninstall krdia ye app ab bekar hai ... Wynk hi theek h",
+          "severity": 3
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "issue_id": "ISS-usability-ads",
+      "name": "Excessive and Unskippable Ads",
+      "description": "Customers complain about frequent, long, or unskippable ads interrupting music and replacing songs.",
+      "decision_area": "usability",
+      "complaint_count": {
+        "value": "31",
+        "claim_id": "C005"
+      },
+      "severity_sum": {
+        "value": "68",
+        "claim_id": "C006"
+      },
+      "mean_severity": {
+        "value": "2.193548",
+        "claim_id": "C007"
+      },
+      "priority_score": {
+        "value": "68",
+        "claim_id": "C008"
+      },
+      "evidence": [
+        {
+          "review_id": "cf6166ae-d71a-4839-9add-088645ad3b78",
+          "quote": "always plays adds instead of songs",
+          "severity": 3
+        },
+        {
+          "review_id": "b9ae23d2-1152-4bfe-a876-afc09c005377",
+          "quote": "The ads are really annoying and sometimes I get five one after the other",
+          "severity": 3
+        },
+        {
+          "review_id": "70b76b68-4876-42a9-b1fe-80087693908b",
+          "quote": "There is 5 advertisement of 30 sec each.",
+          "severity": 3
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "issue_id": "ISS-billing-basic_features_paywalled",
+      "name": "Basic Features Behind Premium",
+      "description": "Customers say features such as lyrics and better audio quality require Premium, with repeated prompts limiting basic use.",
+      "decision_area": "billing/support",
+      "complaint_count": {
+        "value": "18",
+        "claim_id": "C009"
+      },
+      "severity_sum": {
+        "value": "51",
+        "claim_id": "C010"
+      },
+      "mean_severity": {
+        "value": "2.833333",
+        "claim_id": "C011"
+      },
+      "priority_score": {
+        "value": "51",
+        "claim_id": "C012"
+      },
+      "evidence": [
+        {
+          "review_id": "a06df5ff-01c8-4aff-a89c-a0c2ddc88f76",
+          "quote": "recent premium updates Suck",
+          "severity": 3
+        },
+        {
+          "review_id": "074efbfd-f69e-46ca-9cea-e5204a192a2a",
+          "quote": "impossible to use the app without prime",
+          "severity": 3
+        },
+        {
+          "review_id": "82aedd59-debc-4147-9ff4-5a95c3d3a4e4",
+          "quote": "Paying to use basic festures is just sad",
+          "severity": 3
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "issue_id": "ISS-usability-shuffle_skip_limits",
+      "name": "Shuffle and Skip Restrictions",
+      "description": "Customers report unwanted shuffle, difficulty controlling it, and limits on skipping, repeating, or selecting playback points.",
+      "decision_area": "usability",
+      "complaint_count": {
+        "value": "15",
+        "claim_id": "C013"
+      },
+      "severity_sum": {
+        "value": "44",
+        "claim_id": "C014"
+      },
+      "mean_severity": {
+        "value": "2.933333",
+        "claim_id": "C015"
+      },
+      "priority_score": {
+        "value": "44",
+        "claim_id": "C016"
+      },
+      "evidence": [
+        {
+          "review_id": "6ba8fc67-700c-4d33-ad84-ef67a05b2ae1",
+          "quote": "why do I only have 6 skips per hour",
+          "severity": 3
+        },
+        {
+          "review_id": "08d3a5a9-1ec1-4b10-a5c8-393da33843e1",
+          "quote": "will not let you go to any random song in a playlist while on mobile",
+          "severity": 3
+        },
+        {
+          "review_id": "c13dcedc-50da-48a8-a90d-cfb037a66478",
+          "quote": "it shuffle s the worst possible songs",
+          "severity": 3
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "issue_id": "ISS-billing-premium_only_controls",
+      "name": "Playback Controls Require Premium",
+      "description": "Customers say choosing songs, skipping, or advancing playback is restricted without Premium, and one reports a blank subscription page.",
+      "decision_area": "billing/support",
+      "complaint_count": {
+        "value": "12",
+        "claim_id": "C017"
+      },
+      "severity_sum": {
+        "value": "38",
+        "claim_id": "C018"
+      },
+      "mean_severity": {
+        "value": "3.166667",
+        "claim_id": "C019"
+      },
+      "priority_score": {
+        "value": "38",
+        "claim_id": "C020"
+      },
+      "evidence": [
+        {
+          "review_id": "cc39673b-e332-4f1d-a6c6-ce378a715dcb",
+          "quote": "they are pushing the users to buy their premium version",
+          "severity": 4
+        },
+        {
+          "review_id": "398566f7-2519-40e6-a2f4-6676657a18a7",
+          "quote": "when I wanna purchase subscription it's show me a blank page",
+          "severity": 4
+        },
+        {
+          "review_id": "d146397f-4a94-4980-be00-ae9212eca3a7",
+          "quote": "you can't even pick a certain song without Spotify premium",
+          "severity": 3
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "issue_id": "ISS-playback-crashes_wont_open",
+      "name": "App Crashes and Loading Failures",
+      "description": "Customers report crashes, black or loading screens, and playback stopping unexpectedly.",
+      "decision_area": "playback",
+      "complaint_count": {
+        "value": "8",
+        "claim_id": "C021"
+      },
+      "severity_sum": {
+        "value": "30",
+        "claim_id": "C022"
+      },
+      "mean_severity": {
+        "value": "3.750000",
+        "claim_id": "C023"
+      },
+      "priority_score": {
+        "value": "30",
+        "claim_id": "C024"
+      },
+      "evidence": [
+        {
+          "review_id": "4a806587-0dde-4fb4-b4f1-f5c7d197c927",
+          "quote": "the app is just crashing since the latest update",
+          "severity": 4
+        },
+        {
+          "review_id": "065c418e-7f18-42a3-b241-fe693b7a2b0c",
+          "quote": "Black screen of death",
+          "severity": 4
+        },
+        {
+          "review_id": "98d936e1-fd1d-475a-89ee-0e1517cb60d3",
+          "quote": "it absolutely refuses to play music",
+          "severity": 4
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "issue_id": "ISS-usability-redesign_ui",
+      "name": "Confusing Interface and Removed Features",
+      "description": "Customers say updates make navigation harder, change familiar controls, or remove features and settings.",
+      "decision_area": "usability",
+      "complaint_count": {
+        "value": "11",
+        "claim_id": "C025"
+      },
+      "severity_sum": {
+        "value": "30",
+        "claim_id": "C026"
+      },
+      "mean_severity": {
+        "value": "2.727273",
+        "claim_id": "C027"
+      },
+      "priority_score": {
+        "value": "30",
+        "claim_id": "C028"
+      },
+      "evidence": [
+        {
+          "review_id": "0070e713-4cb7-4d78-954f-1764d5593c91",
+          "quote": "every update they make seems to make the app LESS user friendly",
+          "severity": 3
+        },
+        {
+          "review_id": "2aae0ce4-ae4a-46ce-b2fe-0d901eb23c06",
+          "quote": "I have oversized icons and I have to scroll forever to get to my daily mixes",
+          "severity": 3
+        },
+        {
+          "review_id": "3feb5ba7-4a0d-47e0-a803-eb2dce85dd5e",
+          "quote": "I want to play my song",
+          "severity": 3
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "issue_id": "ISS-playback-connection_offline",
+      "name": "Internet Connection Errors",
+      "description": "Customers report connection errors or loading failures despite having a working internet connection.",
+      "decision_area": "playback",
+      "complaint_count": {
+        "value": "9",
+        "claim_id": "C029"
+      },
+      "severity_sum": {
+        "value": "29",
+        "claim_id": "C030"
+      },
+      "mean_severity": {
+        "value": "3.222222",
+        "claim_id": "C031"
+      },
+      "priority_score": {
+        "value": "29",
+        "claim_id": "C032"
+      },
+      "evidence": [
+        {
+          "review_id": "f87fb3d9-501a-4119-bc40-b0669270ae44",
+          "quote": "It doesn't work with mobile data on my phone!!",
+          "severity": 4
+        },
+        {
+          "review_id": "3df77a78-ad9a-4456-8be8-8178ffd43d67",
+          "quote": "Always say no internet connection",
+          "severity": 4
+        },
+        {
+          "review_id": "651e6e7b-f93e-4369-9631-15c73ddcd4ad",
+          "quote": "the entire app wont load past the first screen",
+          "severity": 4
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "sampled": 96,
+    "verified": 96,
+    "agreement": {
+      "intent": 0.9688,
+      "topic": 0.8542,
+      "severity": 0.9062
+    },
+    "severity_mae": 0.1042
+  }
+}

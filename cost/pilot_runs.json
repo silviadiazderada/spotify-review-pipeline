@@ -1,0 +1,62 @@
+{
+  "pilot-cold": {
+    "input_sha256": "c884ac3b9be5066995d5063f96ad9af6e5e082975788c1684c4f6b6ea661dd0e",
+    "workers": 1,
+    "wall_clock_s": 64.72,
+    "stage_seconds": {
+      "enrich": 34.83,
+      "verify": 7.85,
+      "group": 6.97,
+      "memo": 15.06
+    },
+    "rows": 100,
+    "completed": 100,
+    "failed_records": 0,
+    "already_completed": 0,
+    "cache_hits": 0,
+    "unique_texts": 100,
+    "models": {
+      "enrich": "gpt-6-luna",
+      "verify": "gpt-6-luna",
+      "group": "gpt-6-luna",
+      "memo": "gpt-6.1-sol"
+    },
+    "efforts": {
+      "enrich": "none",
+      "verify": "low",
+      "group": "low",
+      "memo": "low"
+    },
+    "provider_reported_cost_usd": 0.017815
+  },
+  "pilot-warm": {
+    "input_sha256": "c884ac3b9be5066995d5063f96ad9af6e5e082975788c1684c4f6b6ea661dd0e",
+    "workers": 1,
+    "wall_clock_s": 0.51,
+    "stage_seconds": {
+      "enrich": 0.5,
+      "verify": 0.0,
+      "group": 0.0,
+      "memo": 0.0
+    },
+    "rows": 100,
+    "completed": 100,
+    "failed_records": 0,
+    "already_completed": 100,
+    "cache_hits": 0,
+    "unique_texts": 100,
+    "models": {
+      "enrich": "gpt-6-luna",
+      "verify": "gpt-6-luna",
+      "group": "gpt-6-luna",
+      "memo": "gpt-6.1-sol"
+    },
+    "efforts": {
+      "enrich": "none",
+      "verify": "low",
+      "group": "low",
+      "memo": "low"
+    },
+    "provider_reported_cost_usd": 0
+  }
+}

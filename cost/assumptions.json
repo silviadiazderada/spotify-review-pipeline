@@ -1,0 +1,38 @@
+{
+  "cold_run_id": "pilot-cold",
+  "warm_run_id": "pilot-warm",
+
+  "full_rows": 660622,
+  "full_nonempty": 660609,
+  "full_distinct": 484189,
+
+  "budget_usd": 50.0,
+  "max_workers": 10,
+  "full_run_workers": 16,
+  "full_run_budget_usd": 30.0,
+  "rate_limit_rpm": 5000,
+  "rate_limit_tpm": 2000000,
+  "enrich_max_output_tokens": 8000,
+  "max_fallback_fraction": 0.0,
+  "fallback_model": "gpt-6.1-sol",
+  "use_batch_api_discount": false,
+
+  "enrich_batch_size": 50,
+  "enrich_prompt_tokens": 1517,
+  "verify_rate": 0.20,
+  "verify_min": 20,
+  "verify_max": 2000,
+
+  "base_retry_rate": 0.0,
+  "base_prompt_cache_hit_rate": 0.95,
+  "base_fixed_multiplier": 1.0,
+
+  "conservative_retry_rate": 0.10,
+  "conservative_prompt_cache_hit_rate": 0.5,
+  "conservative_output_multiplier": 1.25,
+  "conservative_time_multiplier": 1.5,
+  "conservative_fixed_multiplier": 3.0,
+
+  "prompt_versions": {"enrich": "enrich-v1 / schema-v1", "verify": "verify-v1", "group": "group-v1 / issues-v1", "memo": "memo-v1"},
+  "batch_sizes": {"enrich": 50, "verify": 50, "group": "all issues (1 request)", "memo": "1 evidence pack"}
+}

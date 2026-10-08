@@ -1,0 +1,363 @@
+{
+  "simulated_provider": true,
+  "no_api_calls": true,
+  "enrich_label_config": "gpt-6-luna+effort-none+enrich-v1+schema-v1",
+  "passed": 10,
+  "total": 10,
+  "scenarios": [
+    {
+      "scenario": "malformed_then_valid",
+      "expectation": "an unusable batch is retried once, one review per request, and completes",
+      "passed": true,
+      "record_status": {
+        "SIM-1": [
+          "completed",
+          null,
+          2
+        ],
+        "SIM-2": [
+          "completed",
+          null,
+          2
+        ],
+        "SIM-3": [
+          "completed",
+          null,
+          2
+        ]
+      },
+      "call_log": [
+        {
+          "attempt": 1,
+          "outcome": "failed",
+          "error": "invalid_or_missing_items: 3 of 3 (status=completed)",
+          "n_valid": 0
+        },
+        {
+          "attempt": 2,
+          "outcome": "succeeded",
+          "error": null,
+          "n_valid": 1
+        },
+        {
+          "attempt": 2,
+          "outcome": "succeeded",
+          "error": null,
+          "n_valid": 1
+        },
+        {
+          "attempt": 2,
+          "outcome": "succeeded",
+          "error": null,
+          "n_valid": 1
+        }
+      ],
+      "stop_reason": null
+    },
+    {
+      "scenario": "malformed_twice",
+      "expectation": "after one retry, records are quarantined with a reason and attempts=2",
+      "passed": true,
+      "record_status": {
+        "SIM-1": [
+          "quarantined",
+          "invalid_model_output_after_retry",
+          2
+        ],
+        "SIM-2": [
+          "quarantined",
+          "invalid_model_output_after_retry",
+          2
+        ],
+        "SIM-3": [
+          "quarantined",
+          "invalid_model_output_after_retry",
+          2
+        ]
+      },
+      "call_log": [
+        {
+          "attempt": 1,
+          "outcome": "failed",
+          "error": "invalid_or_missing_items: 3 of 3 (status=completed)",
+          "n_valid": 0
+        },
+        {
+          "attempt": 2,
+          "outcome": "failed",
+          "error": "invalid_or_missing_items: 1 of 1 (status=completed)",
+          "n_valid": 0
+        },
+        {
+          "attempt": 2,
+          "outcome": "failed",
+          "error": "invalid_or_missing_items: 1 of 1 (status=completed)",
+          "n_valid": 0
+        },
+        {
+          "attempt": 2,
+          "outcome": "failed",
+          "error": "invalid_or_missing_items: 1 of 1 (status=completed)",
+          "n_valid": 0
+        }
+      ],
+      "stop_reason": null
+    },
+    {
+      "scenario": "one_bad_review_isolated",
+      "expectation": "a batch sunk by one review is retried per review: only that review is quarantined",
+      "passed": true,
+      "record_status": {
+        "SIM-1": [
+          "completed",
+          null,
+          2
+        ],
+        "SIM-2": [
+          "quarantined",
+          "invalid_model_output_after_retry",
+          2
+        ],
+        "SIM-3": [
+          "completed",
+          null,
+          2
+        ]
+      },
+      "call_log": [
+        {
+          "attempt": 1,
+          "outcome": "failed",
+          "error": "invalid_or_missing_items: 3 of 3 (status=completed)",
+          "n_valid": 0
+        },
+        {
+          "attempt": 2,
+          "outcome": "succeeded",
+          "error": null,
+          "n_valid": 1
+        },
+        {
+          "attempt": 2,
+          "outcome": "failed",
+          "error": "invalid_or_missing_items: 1 of 1 (status=completed)",
+          "n_valid": 0
+        },
+        {
+          "attempt": 2,
+          "outcome": "succeeded",
+          "error": null,
+          "n_valid": 1
+        }
+      ],
+      "stop_reason": null
+    },
+    {
+      "scenario": "missing_and_unknown_ids",
+      "expectation": "unknown id r99 is ignored; only the missing review is re-sent",
+      "passed": true,
+      "record_status": {
+        "SIM-1": [
+          "completed",
+          null,
+          1
+        ],
+        "SIM-2": [
+          "completed",
+          null,
+          1
+        ],
+        "SIM-3": [
+          "completed",
+          null,
+          2
+        ]
+      },
+      "call_log": [
+        {
+          "attempt": 1,
+          "outcome": "failed",
+          "error": "invalid_or_missing_items: 1 of 3 (status=completed)",
+          "n_valid": 2
+        },
+        {
+          "attempt": 2,
+          "outcome": "succeeded",
+          "error": null,
+          "n_valid": 1
+        }
+      ],
+      "stop_reason": null
+    },
+    {
+      "scenario": "bad_quote",
+      "expectation": "a non-substring quote is replaced by the exact full text and flagged quote_fallback",
+      "passed": true,
+      "record_status": {
+        "SIM-1": [
+          "completed",
+          null,
+          1
+        ]
+      },
+      "call_log": [
+        {
+          "attempt": 1,
+          "outcome": "succeeded",
+          "error": null,
+          "n_valid": 1
+        }
+      ],
+      "stop_reason": null
+    },
+    {
+      "scenario": "empty_text",
+      "expectation": "whitespace-only text is quarantined as empty_review_text and never sent",
+      "passed": true,
+      "record_status": {
+        "SIM-E": [
+          "quarantined",
+          "empty_review_text",
+          0
+        ],
+        "SIM-1": [
+          "completed",
+          null,
+          1
+        ]
+      },
+      "call_log": [
+        {
+          "attempt": 1,
+          "outcome": "succeeded",
+          "error": null,
+          "n_valid": 1
+        }
+      ],
+      "stop_reason": null
+    },
+    {
+      "scenario": "rate_limit_then_ok",
+      "expectation": "a 429 is logged as a failed attempt, retried with backoff, then completes",
+      "passed": true,
+      "record_status": {
+        "SIM-1": [
+          "completed",
+          null,
+          2
+        ],
+        "SIM-2": [
+          "completed",
+          null,
+          2
+        ],
+        "SIM-3": [
+          "completed",
+          null,
+          2
+        ]
+      },
+      "call_log": [
+        {
+          "attempt": 1,
+          "outcome": "failed",
+          "error": "RateLimit: 429 rate limited (simulated)",
+          "n_valid": 0
+        },
+        {
+          "attempt": 2,
+          "outcome": "succeeded",
+          "error": null,
+          "n_valid": 3
+        }
+      ],
+      "stop_reason": null
+    },
+    {
+      "scenario": "fatal_auth_error",
+      "expectation": "a 401 stops the run after one attempt; records stay pending for a later resume",
+      "passed": true,
+      "record_status": {
+        "SIM-1": [
+          "pending",
+          null,
+          0
+        ],
+        "SIM-2": [
+          "pending",
+          null,
+          0
+        ],
+        "SIM-3": [
+          "pending",
+          null,
+          0
+        ]
+      },
+      "call_log": [
+        {
+          "attempt": 1,
+          "outcome": "failed",
+          "error": "AuthError: 401 invalid api key (simulated)",
+          "n_valid": 0
+        }
+      ],
+      "stop_reason": "fatal API error: AuthError: 401 invalid api key (simulated)"
+    },
+    {
+      "scenario": "credits_exhausted",
+      "expectation": "a 429 insufficient_quota stops the run after one attempt; records stay pending",
+      "passed": true,
+      "record_status": {
+        "SIM-1": [
+          "pending",
+          null,
+          0
+        ],
+        "SIM-2": [
+          "pending",
+          null,
+          0
+        ],
+        "SIM-3": [
+          "pending",
+          null,
+          0
+        ]
+      },
+      "call_log": [
+        {
+          "attempt": 1,
+          "outcome": "failed",
+          "error": "NoCredits: Error code: 429 - {'error': {'message': 'You have no credits remaining.', 'type': 'insufficient_quota', 'code': 'insufficient_quota'}}",
+          "n_valid": 0
+        }
+      ],
+      "stop_reason": "fatal API error: NoCredits: Error code: 429 - {'error': {'message': 'You have no credits remaining.', 'type': 'insufficient_quota', 'code': 'insufficient_quota'}}"
+    },
+    {
+      "scenario": "budget_cap",
+      "expectation": "the spend ledger refuses to dispatch when the worst-case cost exceeds the cap",
+      "passed": true,
+      "record_status": {
+        "SIM-1": [
+          "pending",
+          null,
+          0
+        ],
+        "SIM-2": [
+          "pending",
+          null,
+          0
+        ],
+        "SIM-3": [
+          "pending",
+          null,
+          0
+        ]
+      },
+      "call_log": [],
+      "stop_reason": "budget: spent $0.0000 + reserved $0.0000 + next $0.0005 > cap $0.00"
+    }
+  ]
+}

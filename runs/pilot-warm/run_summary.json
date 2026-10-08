@@ -1,0 +1,60 @@
+{
+  "run_id": "pilot-warm",
+  "phase": "initial",
+  "input": "data/raw/cost_100.csv",
+  "state": "state/pilot.sqlite",
+  "label_config": "gpt-6-luna+effort-none+enrich-v1+schema-v1",
+  "budget_usd": 0.5,
+  "workers": 1,
+  "wall_clock_s": 0.51,
+  "total_cost_usd": 0,
+  "stop_reason": null,
+  "stages": {
+    "enrich": {
+      "seconds": 0.5,
+      "distinct_texts_to_call": 0,
+      "already_completed_same_config": 100,
+      "cache_hits_before_calls": 0,
+      "record_status": {
+        "completed": 100
+      },
+      "stop_reason": null,
+      "calls": 0,
+      "failed_calls": 0,
+      "cost_usd": 0
+    },
+    "verify": {
+      "seconds": 0.0,
+      "sampled": 20,
+      "verified": 20,
+      "calls": 0,
+      "failed_calls": 0,
+      "cost_usd": 0
+    },
+    "export_records": {
+      "seconds": 0.0,
+      "counts": {
+        "completed": 100
+      }
+    },
+    "group": {
+      "seconds": 0.0,
+      "issues": 19,
+      "members": 52,
+      "calls": 0,
+      "failed_calls": 0,
+      "cost_usd": 0
+    },
+    "rank": {
+      "seconds": 0.0,
+      "issues_ranked": 19
+    },
+    "memo": {
+      "seconds": 0.0,
+      "check_passed": true,
+      "calls": 0,
+      "failed_calls": 0,
+      "cost_usd": 0
+    }
+  }
+}

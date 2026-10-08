@@ -1,0 +1,32 @@
+{
+  "run_id": "dev-500-v2",
+  "phase": "initial",
+  "input": "data/raw/checkpoint_500.csv",
+  "input_sha256": "a94e31663ee7b7eaa77e23b7a8425b530cc0c866ed5e714953172a0afef6a12f",
+  "label_config": "gpt-6-luna+effort-none+enrich-v1+schema-v1",
+  "batch_size": 50,
+  "workers": 1,
+  "budget_usd": 0.2,
+  "started_at": "2026-10-08T02:02:39.965+00:00",
+  "ingest": {
+    "rows": 500,
+    "new": 0,
+    "empty_quarantined": 0
+  },
+  "already_completed_same_config": 500,
+  "cache_hits_before_calls": 0,
+  "distinct_texts_to_call": 0,
+  "finished_at": "2026-10-08T02:02:39.987+00:00",
+  "wall_clock_s": 0.02,
+  "stop_reason": null,
+  "record_status": {
+    "completed": 500
+  },
+  "calls": 0,
+  "failed_calls": 0,
+  "cost_usd": 0,
+  "input_tokens": 0,
+  "cached_input_tokens": 0,
+  "output_tokens": 0,
+  "quote_fallbacks": 0
+}

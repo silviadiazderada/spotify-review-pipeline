@@ -1,0 +1,63 @@
+{
+  "n_golden": 50,
+  "predicted": 50,
+  "missing_or_quarantined": 0,
+  "intent_agreement": 0.84,
+  "topic_agreement": 0.7,
+  "intent_macro_f1": 0.7292,
+  "topic_macro_f1": 0.3788,
+  "severity_exact_agreement": 0.74,
+  "severity_mae": 0.32,
+  "sentiment_mae": 0.34,
+  "sentiment_within_tolerance": 0.92,
+  "sentiment_tolerance": 0.5,
+  "evidence_quote_exact_substring": 50,
+  "evidence_quote_fallbacks": 0,
+  "needs_review": {
+    "human_flagged": 10,
+    "model_flagged": 7,
+    "both": 0
+  },
+  "ambiguous_cases_human_flagged": 10,
+  "per_topic_counts": {
+    "human": {
+      "catalog": 3,
+      "other": 29,
+      "billing": 9,
+      "playback": 3,
+      "usability": 5,
+      "access": 1
+    },
+    "model": {
+      "catalog": 5,
+      "other": 29,
+      "usability": 9,
+      "playback": 4,
+      "billing": 2,
+      "downloads": 1
+    }
+  },
+  "per_intent_counts": {
+    "human": {
+      "complaint": 16,
+      "praise": 20,
+      "unclear": 9,
+      "request": 2,
+      "cancellation": 3
+    },
+    "model": {
+      "complaint": 22,
+      "praise": 21,
+      "unclear": 5,
+      "cancellation": 1,
+      "request": 1
+    }
+  },
+  "rule_adjusted_secondary": {
+    "note": "Reference labels for cases where the original human label contradicted the written contract were replaced by the rule-determined value, after model predictions were seen. Disclosed; the primary metrics above use the original frozen labels.",
+    "cases_adjusted": 10,
+    "intent_agreement": 0.9,
+    "topic_agreement": 0.84,
+    "severity_exact_agreement": 0.76
+  }
+}

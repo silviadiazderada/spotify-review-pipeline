@@ -1,0 +1,62 @@
+{
+  "run_id": "dev-10k-w8",
+  "phase": "initial",
+  "input": "data/raw/analysis_10000.csv",
+  "state": "state/dev10k.sqlite",
+  "label_config": "gpt-6-luna+effort-none+enrich-v1+schema-v1",
+  "budget_usd": 1.0,
+  "workers": 8,
+  "wall_clock_s": 775.89,
+  "total_cost_usd": 0.251929,
+  "stop_reason": null,
+  "stages": {
+    "enrich": {
+      "seconds": 283.6,
+      "distinct_texts_to_call": 7448,
+      "already_completed_same_config": 2188,
+      "cache_hits_before_calls": 0,
+      "record_status": {
+        "completed": 9949,
+        "quarantined": 51
+      },
+      "stop_reason": null,
+      "calls": 150,
+      "failed_calls": 2,
+      "cost_usd": 0.202757
+    },
+    "verify": {
+      "seconds": 463.93,
+      "sampled": 1680,
+      "verified": 1680,
+      "calls": 34,
+      "failed_calls": 0,
+      "cost_usd": 0.033338
+    },
+    "export_records": {
+      "seconds": 0.15,
+      "counts": {
+        "completed": 9949,
+        "quarantined:invalid_model_output_after_retry": 51
+      }
+    },
+    "group": {
+      "seconds": 13.26,
+      "issues": 35,
+      "members": 4544,
+      "calls": 1,
+      "failed_calls": 0,
+      "cost_usd": 0.001128
+    },
+    "rank": {
+      "seconds": 0.05,
+      "issues_ranked": 35
+    },
+    "memo": {
+      "seconds": 14.88,
+      "check_passed": true,
+      "calls": 1,
+      "failed_calls": 0,
+      "cost_usd": 0.014706
+    }
+  }
+}

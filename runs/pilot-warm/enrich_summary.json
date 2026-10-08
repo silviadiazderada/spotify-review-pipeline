@@ -1,0 +1,32 @@
+{
+  "run_id": "pilot-warm",
+  "phase": "initial",
+  "input": "data/raw/cost_100.csv",
+  "input_sha256": "c884ac3b9be5066995d5063f96ad9af6e5e082975788c1684c4f6b6ea661dd0e",
+  "label_config": "gpt-6-luna+effort-none+enrich-v1+schema-v1",
+  "batch_size": 50,
+  "workers": 1,
+  "budget_usd": 0.5,
+  "started_at": "2026-10-07T22:55:56.567+00:00",
+  "ingest": {
+    "rows": 100,
+    "new": 0,
+    "empty_quarantined": 0
+  },
+  "already_completed_same_config": 100,
+  "cache_hits_before_calls": 0,
+  "distinct_texts_to_call": 0,
+  "finished_at": "2026-10-07T22:55:56.571+00:00",
+  "wall_clock_s": 0.0,
+  "stop_reason": null,
+  "record_status": {
+    "completed": 100
+  },
+  "calls": 0,
+  "failed_calls": 0,
+  "cost_usd": 0,
+  "input_tokens": 0,
+  "cached_input_tokens": 0,
+  "output_tokens": 0,
+  "quote_fallbacks": 0
+}

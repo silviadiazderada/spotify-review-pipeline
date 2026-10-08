@@ -1,0 +1,48 @@
+{
+  "checkpoint_500": {
+    "runs": [
+      "dev-500"
+    ],
+    "workers_main_run": 1,
+    "rows": 500,
+    "record_status": {
+      "completed": 500
+    },
+    "enrich_attempts": 10,
+    "enrich_failed_attempts": 0,
+    "distinct_texts_completed": 479,
+    "enrich_cost_usd": 0.012499,
+    "enrich_cost_per_distinct_text": 2.609457202505219e-05,
+    "output_tokens_per_text": 45.292275574112736,
+    "uncached_input_per_text": 31.31732776617954,
+    "retry_rate": 0.0,
+    "requests_per_second_main_run": 0.0793556275456075,
+    "main_run": "dev-500",
+    "verify_cost_per_review": 2.3923958333333335e-05,
+    "fixed_group_memo_cost_usd": 0.0151003
+  },
+  "analysis_10000": {
+    "runs": [
+      "dev-10k-w2",
+      "dev-10k-w8",
+      "dev-10k-requeue"
+    ],
+    "workers_main_run": 8,
+    "rows": 10000,
+    "record_status": {
+      "completed": 10000
+    },
+    "enrich_attempts": 171,
+    "enrich_failed_attempts": 2,
+    "distinct_texts_completed": 8448,
+    "enrich_cost_usd": 0.228689,
+    "enrich_cost_per_distinct_text": 2.7070229640151513e-05,
+    "output_tokens_per_text": 47.370975378787875,
+    "uncached_input_per_text": 30.568181818181817,
+    "retry_rate": 0.011834319526627219,
+    "requests_per_second_main_run": 0.5575109392708864,
+    "main_run": "dev-10k-w8",
+    "verify_cost_per_review": 1.9844166666666665e-05,
+    "fixed_group_memo_cost_usd": 0.015834400000000002
+  }
+}

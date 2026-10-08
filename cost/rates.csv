@@ -1,0 +1,7 @@
+model,billing_item,price_usd_per_1m_tokens,currency,tier,source_url,source_checked
+gpt-6-luna,input_uncached,0.10,USD,standard,https://developers.openai.com/api/docs/models/gpt-6-luna,2026-10-06
+gpt-6-luna,input_cached,0.01,USD,standard,https://developers.openai.com/api/docs/models/gpt-6-luna,2026-10-06
+gpt-6-luna,output,0.50,USD,standard,https://developers.openai.com/api/docs/models/gpt-6-luna,2026-10-06
+gpt-6.1-sol,input_uncached,2.00,USD,standard,https://developers.openai.com/api/docs/models/gpt-6.1-sol,2026-10-07
+gpt-6.1-sol,input_cached,0.10,USD,standard,https://developers.openai.com/api/docs/models/gpt-6.1-sol,2026-10-07
+gpt-6.1-sol,output,10.00,USD,standard,https://developers.openai.com/api/docs/models/gpt-6.1-sol,2026-10-07

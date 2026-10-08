@@ -1,0 +1,384 @@
+{
+  "scope": {
+    "source_rows": 10000,
+    "completed_classifications": 9949,
+    "not_classified": 51,
+    "record_status": {
+      "completed": 9949,
+      "quarantined:invalid_model_output_after_retry": 51
+    },
+    "first_review": "2022-05-17 02:29:15",
+    "last_review": "2023-11-15 22:13:05"
+  },
+  "intent_counts": {
+    "praise": 4287,
+    "complaint": 4095,
+    "cancellation": 449,
+    "unclear": 865,
+    "request": 253
+  },
+  "complaint_and_cancellation_records": 4544,
+  "complaints_share_of_completed": "45.7%",
+  "cancellation_intent_records": 449,
+  "decision_areas": {
+    "usability": {
+      "complaint_records": 1263,
+      "severity_sum": 3154,
+      "share_of_complaints": "27.8%"
+    },
+    "billing/support": {
+      "complaint_records": 856,
+      "severity_sum": 2452,
+      "share_of_complaints": "18.8%"
+    },
+    "outside the four areas": {
+      "complaint_records": 1568,
+      "severity_sum": 3426,
+      "share_of_complaints": "34.5%"
+    },
+    "playback": {
+      "complaint_records": 702,
+      "severity_sum": 2325,
+      "share_of_complaints": "15.4%"
+    },
+    "access": {
+      "complaint_records": 155,
+      "severity_sum": 594,
+      "share_of_complaints": "3.4%"
+    }
+  },
+  "ranking_rule": "priority_score = complaint_count x mean_severity = severity_sum; one issue per complaint",
+  "issues_ranked_total": 35,
+  "top_issues": [
+    {
+      "rank": 1,
+      "issue_id": "ISS-other-general",
+      "name": "Mixed General App Complaints",
+      "description": "Mixed generic complaints mention missing favorites, app access or installation, deletion problems, and other unspecified defects.",
+      "decision_area": "outside the four areas",
+      "complaint_count": {
+        "value": "1299",
+        "claim_id": "C001"
+      },
+      "severity_sum": {
+        "value": "2643",
+        "claim_id": "C002"
+      },
+      "mean_severity": {
+        "value": "2.034642",
+        "claim_id": "C003"
+      },
+      "priority_score": {
+        "value": "2643",
+        "claim_id": "C004"
+      },
+      "evidence": [
+        {
+          "review_id": "7a9422f5-7266-4f53-adf3-7cc65803e8bf",
+          "quote": "they are BOTS or hacker",
+          "severity": 5
+        },
+        {
+          "review_id": "7142ad2b-7178-4353-aa39-1393bfd2cda1",
+          "quote": "all my favourite songs are gone",
+          "severity": 5
+        },
+        {
+          "review_id": "9ec6712e-a862-4605-ae0e-e6998105f921",
+          "quote": "I can't delete mine!",
+          "severity": 5
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "issue_id": "ISS-usability-ads",
+      "name": "Disruptive and Repetitive Ads",
+      "description": "Customers report frequent or prolonged ads interrupting music and making the app difficult to use.",
+      "decision_area": "usability",
+      "complaint_count": {
+        "value": "571",
+        "claim_id": "C005"
+      },
+      "severity_sum": {
+        "value": "1251",
+        "claim_id": "C006"
+      },
+      "mean_severity": {
+        "value": "2.190893",
+        "claim_id": "C007"
+      },
+      "priority_score": {
+        "value": "1251",
+        "claim_id": "C008"
+      },
+      "evidence": [
+        {
+          "review_id": "3eb10bc4-1544-4cd2-9146-d2451fdb0aa0",
+          "quote": "got stuck on a ad for 1-2 hours",
+          "severity": 4
+        },
+        {
+          "review_id": "933b1cf2-8fa9-46aa-9a06-85fd89533a99",
+          "quote": "Makes the app unusable.",
+          "severity": 4
+        },
+        {
+          "review_id": "e2466f8d-ab7d-4a8f-8f29-c6726c45d717",
+          "quote": "the ads would be annoying",
+          "severity": 3
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "issue_id": "ISS-billing-general",
+      "name": "Subscription Required for Playback",
+      "description": "Customers say the app asks them to subscribe before they can play music or change songs.",
+      "decision_area": "billing/support",
+      "complaint_count": {
+        "value": "293",
+        "claim_id": "C009"
+      },
+      "severity_sum": {
+        "value": "810",
+        "claim_id": "C010"
+      },
+      "mean_severity": {
+        "value": "2.764505",
+        "claim_id": "C011"
+      },
+      "priority_score": {
+        "value": "810",
+        "claim_id": "C012"
+      },
+      "evidence": [
+        {
+          "review_id": "6985febf-75fa-47e9-9a86-c62f47a18554",
+          "quote": "ME ENCANTA SPOTIFY, EL ÚNICO PROBLEMA ES QUE NUEVAMENTE LE COBRARON A JAIME ROSALES, QUE ES GRATIS SUPUESTAMENTE Y ÉL NO LO USA. SOY YO LA QUE LO QUIERO.",
+          "severity": 5
+        },
+        {
+          "review_id": "4aaf911e-2ab6-4ccb-a0b7-4c6336f729c8",
+          "quote": "We cannot play music without premion",
+          "severity": 4
+        },
+        {
+          "review_id": "d1c27639-ab7a-442f-954a-bf436719a497",
+          "quote": "we are not changing song without subscription",
+          "severity": 4
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "issue_id": "ISS-billing-basic_features_paywalled",
+      "name": "Basic Features Require Premium",
+      "description": "Customers say they cannot use or stream music without Premium, or that previously available playback is restricted.",
+      "decision_area": "billing/support",
+      "complaint_count": {
+        "value": "258",
+        "claim_id": "C013"
+      },
+      "severity_sum": {
+        "value": "758",
+        "claim_id": "C014"
+      },
+      "mean_severity": {
+        "value": "2.937984",
+        "claim_id": "C015"
+      },
+      "priority_score": {
+        "value": "758",
+        "claim_id": "C016"
+      },
+      "evidence": [
+        {
+          "review_id": "546c479d-155e-44ed-8e8b-0ab6fc2b5592",
+          "quote": "Why do I pay for premium if I don't even have it.",
+          "severity": 5
+        },
+        {
+          "review_id": "dc3134bd-f34a-4493-a395-958cd400c633",
+          "quote": "you have to buy premium",
+          "severity": 4
+        },
+        {
+          "review_id": "074efbfd-f69e-46ca-9cea-e5204a192a2a",
+          "quote": "It's impossible to use the app without prime",
+          "severity": 4
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "issue_id": "ISS-playback-general",
+      "name": "Mixed General Playback Problems",
+      "description": "Mixed generic complaints describe unreliable app use, missing library content, and playback that stops or works only briefly.",
+      "decision_area": "playback",
+      "complaint_count": {
+        "value": "202",
+        "claim_id": "C017"
+      },
+      "severity_sum": {
+        "value": "672",
+        "claim_id": "C018"
+      },
+      "mean_severity": {
+        "value": "3.326733",
+        "claim_id": "C019"
+      },
+      "priority_score": {
+        "value": "672",
+        "claim_id": "C020"
+      },
+      "evidence": [
+        {
+          "review_id": "7d26a988-37c4-4f3c-a876-bade969577a5",
+          "quote": "All my playlist is gone",
+          "severity": 5
+        },
+        {
+          "review_id": "3ddd746f-2fa6-441e-a88e-8ecdff949635",
+          "quote": "My library is on home screen but not in library.",
+          "severity": 5
+        },
+        {
+          "review_id": "4892a086-4653-424e-a5f3-8e12ba2582b1",
+          "quote": "was unusable",
+          "severity": 4
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "issue_id": "ISS-usability-shuffle_skip_limits",
+      "name": "Shuffle, Repeat, and Skip Limits",
+      "description": "Customers report unwanted shuffle behavior, repeated songs, and limits on skipping, repeating, or selecting playback sections.",
+      "decision_area": "usability",
+      "complaint_count": {
+        "value": "194",
+        "claim_id": "C021"
+      },
+      "severity_sum": {
+        "value": "563",
+        "claim_id": "C022"
+      },
+      "mean_severity": {
+        "value": "2.902062",
+        "claim_id": "C023"
+      },
+      "priority_score": {
+        "value": "563",
+        "claim_id": "C024"
+      },
+      "evidence": [
+        {
+          "review_id": "40ddeafd-a71d-4757-8103-a86b47ba18ea",
+          "quote": "I can't listen to them",
+          "severity": 3
+        },
+        {
+          "review_id": "117cc256-0c7b-49e5-8117-f58f08080682",
+          "quote": "if you can't even repeat a song,shuffle a playlist or rewind a song",
+          "severity": 3
+        },
+        {
+          "review_id": "25bbe898-e819-4fcb-942b-0fccd065a33f",
+          "quote": "it will only give me random songs",
+          "severity": 3
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "issue_id": "ISS-billing-premium_only_controls",
+      "name": "Playback Controls Require Premium",
+      "description": "Customers say choosing songs, disabling shuffle, or listening to music requires Premium.",
+      "decision_area": "billing/support",
+      "complaint_count": {
+        "value": "181",
+        "claim_id": "C025"
+      },
+      "severity_sum": {
+        "value": "547",
+        "claim_id": "C026"
+      },
+      "mean_severity": {
+        "value": "3.022099",
+        "claim_id": "C027"
+      },
+      "priority_score": {
+        "value": "547",
+        "claim_id": "C028"
+      },
+      "evidence": [
+        {
+          "review_id": "645e52d9-3998-43de-b7e0-19e410e3feb6",
+          "quote": "i can't listen to any songs",
+          "severity": 4
+        },
+        {
+          "review_id": "cc39673b-e332-4f1d-a6c6-ce378a715dcb",
+          "quote": "I know they are pushing the users to buy their premium version",
+          "severity": 4
+        },
+        {
+          "review_id": "8809562f-2baf-45f0-88bc-00f75a356dad",
+          "quote": "you can't even play any song it says you can't play any music at any time get premium",
+          "severity": 4
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "issue_id": "ISS-usability-general",
+      "name": "General App Usability Problems",
+      "description": "Customers report difficulty navigating the app, controlling playback, seeking within songs, and preventing unwanted playback.",
+      "decision_area": "usability",
+      "complaint_count": {
+        "value": "188",
+        "claim_id": "C029"
+      },
+      "severity_sum": {
+        "value": "478",
+        "claim_id": "C030"
+      },
+      "mean_severity": {
+        "value": "2.542553",
+        "claim_id": "C031"
+      },
+      "priority_score": {
+        "value": "478",
+        "claim_id": "C032"
+      },
+      "evidence": [
+        {
+          "review_id": "9bcbec2d-690f-417f-a133-8708f83d4bda",
+          "quote": "i cant even see the inside of this app",
+          "severity": 4
+        },
+        {
+          "review_id": "964b4087-32d8-4746-b645-dab7f2c20546",
+          "quote": "one can't listen to what they want",
+          "severity": 4
+        },
+        {
+          "review_id": "79bfe0dc-2854-4cbd-b6a0-a89936f2a14f",
+          "quote": "now you can't even go to a specific length of a song",
+          "severity": 3
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "sampled": 1680,
+    "verified": 1680,
+    "agreement": {
+      "intent": 0.9512,
+      "topic": 0.8982,
+      "severity": 0.9149
+    },
+    "severity_mae": 0.0917
+  }
+}

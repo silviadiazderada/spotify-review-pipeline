@@ -1,0 +1,16 @@
+request_id,run_id,role,model,billing_item,billed_units,unit,reasoning_tokens_included_in_output
+resp_0e37283cf7d4fe79016ac67bc2256887d0837799d238c41fbc,pilot-cold,enrich,gpt-6-luna,input_uncached,3084,tokens,
+resp_0e37283cf7d4fe79016ac67bc2256887d0837799d238c41fbc,pilot-cold,enrich,gpt-6-luna,input_cached,0,tokens,
+resp_0e37283cf7d4fe79016ac67bc2256887d0837799d238c41fbc,pilot-cold,enrich,gpt-6-luna,output,2207,tokens,0
+resp_0706a8cd249cca0f016ac67bd48d6087d08c82b375031114ac,pilot-cold,enrich,gpt-6-luna,input_uncached,1646,tokens,
+resp_0706a8cd249cca0f016ac67bd48d6087d08c82b375031114ac,pilot-cold,enrich,gpt-6-luna,input_cached,1517,tokens,
+resp_0706a8cd249cca0f016ac67bd48d6087d08c82b375031114ac,pilot-cold,enrich,gpt-6-luna,output,2274,tokens,0
+resp_0f9ef23291e4d79f016ac67be4072c87d0a0c03953d8f88f59,pilot-cold,verify,gpt-6-luna,input_uncached,1254,tokens,
+resp_0f9ef23291e4d79f016ac67be4072c87d0a0c03953d8f88f59,pilot-cold,verify,gpt-6-luna,input_cached,0,tokens,
+resp_0f9ef23291e4d79f016ac67be4072c87d0a0c03953d8f88f59,pilot-cold,verify,gpt-6-luna,output,772,tokens,393
+resp_0b3945347617755e016ac67bebcd4887d0a525d001ba682782,pilot-cold,group,gpt-6-luna,input_uncached,1227,tokens,
+resp_0b3945347617755e016ac67bebcd4887d0a525d001ba682782,pilot-cold,group,gpt-6-luna,input_cached,0,tokens,
+resp_0b3945347617755e016ac67bebcd4887d0a525d001ba682782,pilot-cold,group,gpt-6-luna,output,605,tokens,0
+resp_04f3565af617a69d016ac67bf2c80087d095a1f65c17bdcd0a,pilot-cold,memo,gpt-6.1-sol,input_uncached,3005,tokens,
+resp_04f3565af617a69d016ac67bf2c80087d095a1f65c17bdcd0a,pilot-cold,memo,gpt-6.1-sol,input_cached,0,tokens,
+resp_04f3565af617a69d016ac67bf2c80087d095a1f65c17bdcd0a,pilot-cold,memo,gpt-6.1-sol,output,814,tokens,0

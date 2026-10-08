@@ -1,0 +1,32 @@
+{
+  "run_id": "dev-100",
+  "phase": "initial",
+  "input": "data/raw/cost_100.csv",
+  "input_sha256": "c884ac3b9be5066995d5063f96ad9af6e5e082975788c1684c4f6b6ea661dd0e",
+  "label_config": "gpt-6-luna+effort-none+enrich-v1+schema-v1",
+  "batch_size": 50,
+  "workers": 1,
+  "budget_usd": 0.1,
+  "started_at": "2026-10-07T04:57:18.431+00:00",
+  "ingest": {
+    "rows": 100,
+    "new": 100,
+    "empty_quarantined": 0
+  },
+  "already_completed_same_config": 0,
+  "cache_hits_before_calls": 0,
+  "distinct_texts_to_call": 100,
+  "finished_at": "2026-10-07T04:57:48.006+00:00",
+  "wall_clock_s": 29.58,
+  "stop_reason": null,
+  "record_status": {
+    "completed": 100
+  },
+  "calls": 2,
+  "failed_calls": 0,
+  "cost_usd": 0.002724,
+  "input_tokens": 6247,
+  "cached_input_tokens": 1517,
+  "output_tokens": 4471,
+  "quote_fallbacks": 1
+}

@@ -1,0 +1,35 @@
+{
+  "run_id": "full-resume-2",
+  "phase": "resume",
+  "input": "data/raw/spotify_reviews_18months.csv",
+  "input_sha256": "1fc85de68a304dd8978b537cfa58793d5f41cbaf417fa32cb53899f83a2fcef6",
+  "label_config": "gpt-6-luna+effort-none+enrich-v1+schema-v1",
+  "batch_size": 50,
+  "workers": 16,
+  "budget_usd": 30.0,
+  "started_at": "2026-10-08T14:08:35.283+00:00",
+  "ingest": {
+    "rows": 660622,
+    "new": 0,
+    "empty_quarantined": 0
+  },
+  "requeued_quarantined": 0,
+  "already_completed_same_config": 475494,
+  "cache_hits_before_calls": 0,
+  "distinct_texts_to_call": 181789,
+  "finished_at": "2026-10-08T15:02:22.579+00:00",
+  "wall_clock_s": 3227.38,
+  "stop_reason": "interrupted by user (Ctrl+C); completed batches are saved",
+  "record_status": {
+    "completed": 529644,
+    "pending": 130958,
+    "quarantined": 20
+  },
+  "calls": 1504,
+  "failed_calls": 204,
+  "cost_usd": 1.423436,
+  "input_tokens": 3709864,
+  "cached_input_tokens": 1997038,
+  "output_tokens": 2464367,
+  "quote_fallbacks": 418
+}

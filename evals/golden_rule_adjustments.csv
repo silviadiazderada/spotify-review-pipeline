@@ -1,0 +1,13 @@
+case,review_id,field,original_human,rule_adjusted,rule,adjudicated
+16,01d453b0-dca3-42e9-8aa4-5fc167b08070,topic,billing,usability,Ads are usability unless about paying to remove them,"2026-10-07, after model predictions were seen (disclosed)"
+37,2aa566c6-b98d-4513-b900-83702a8db8eb,topic,billing,usability,Ads are usability unless about paying to remove them,"2026-10-07, after model predictions were seen (disclosed)"
+46,9034d675-9582-49b6-a1c1-c4ddabf8baf1,topic,other,usability,Ads are usability unless about paying to remove them,"2026-10-07, after model predictions were seen (disclosed)"
+22,de48c99b-46fe-4837-8634-e63dbc72a5ea,topic,usability,catalog,Recommendations are catalog,"2026-10-07, after model predictions were seen (disclosed)"
+32,215463ae-95b7-4481-8747-1754b68f31fa,topic,access,playback,Playback failure is playback,"2026-10-07, after model predictions were seen (disclosed)"
+45,ac4e860a-c042-49cc-90f3-189591c336ac,topic,billing,downloads,Paid-plan mention alone is not billing; offline listening is downloads,"2026-10-07, after model predictions were seen (disclosed)"
+42,1a41c7e1-a655-4c63-b4db-c22bdff18003,intent,unclear,complaint,Generic bad app is a complaint; complaints are severity >= 2,"2026-10-07, after model predictions were seen (disclosed)"
+42,1a41c7e1-a655-4c63-b4db-c22bdff18003,severity,1,2,Generic bad app is a complaint; complaints are severity >= 2,"2026-10-07, after model predictions were seen (disclosed)"
+30,16d640e9-b281-4746-9562-c7dbcf7126b6,intent,unclear,complaint,Negative experience is a complaint; minimum consistent severity 2,"2026-10-07, after model predictions were seen (disclosed)"
+30,16d640e9-b281-4746-9562-c7dbcf7126b6,severity,1,2,Negative experience is a complaint; minimum consistent severity 2,"2026-10-07, after model predictions were seen (disclosed)"
+48,99b93e31-9f15-4daa-88ac-349ab0419c48,intent,cancellation,complaint,Cancellation requires explicit departure,"2026-10-07, after model predictions were seen (disclosed)"
+50,083811c7-d469-499b-9bef-5b9fb096653d,topic,catalog,other,General praise is other,"2026-10-07, after model predictions were seen (disclosed)"

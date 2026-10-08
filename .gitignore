@@ -1,0 +1,26 @@
+# Secrets: never commit real keys
+.env
+.env.*
+!.env.example
+
+# Python / tools
+.venv/
+__pycache__/
+.DS_Store
+
+# Large raw data (download link + checksum documented in README)
+data/raw/
+data/prepared/
+data/*.zip
+
+# Working state (SQLite result cache, call log, local checker reference) - large, rebuilt by the pipeline
+state/
+# Per-run full record dumps (the grading export ships records.jsonl.gz instead)
+runs/**/records.jsonl
+runs/*.log
+# Screen recording is too large for git (published as a release asset)
+evidence/*.mov
+# Python / dashboard build artifacts
+evals/failure_paths/tmp/
+dashboard/.next/
+dashboard/node_modules/

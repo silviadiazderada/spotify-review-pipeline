@@ -1,0 +1,32 @@
+{
+  "verify_config": "gpt-6-luna+effort-low+verify-v1",
+  "enrich_config": "gpt-6-luna+effort-none+enrich-v1+schema-v1",
+  "sample_rule": "20% of distinct completed texts (min 20, max 2000), ordered by sha256('a5-verify-v1:' + review_id)",
+  "population_distinct_texts": 100,
+  "sampled": 20,
+  "verified": 20,
+  "new_model_calls": 1,
+  "agreement": {
+    "intent": 0.95,
+    "topic": 0.9,
+    "severity": 0.95
+  },
+  "severity_mae": 0.05,
+  "disagreements": 2,
+  "intent_confusion": [
+    [
+      "complaint->praise",
+      1
+    ]
+  ],
+  "topic_confusion": [
+    [
+      "other->catalog",
+      1
+    ],
+    [
+      "usability->other",
+      1
+    ]
+  ]
+}

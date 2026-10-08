@@ -1,0 +1,92 @@
+{
+  "verify_config": "gpt-6-luna+effort-low+verify-v1",
+  "enrich_config": "gpt-6-luna+effort-none+enrich-v1+schema-v1",
+  "sample_rule": "20% of distinct completed texts (min 20, max 2000), ordered by sha256('a5-verify-v1:' + review_id)",
+  "population_distinct_texts": 479,
+  "sampled": 96,
+  "verified": 96,
+  "new_model_calls": 0,
+  "agreement": {
+    "intent": 0.8646,
+    "topic": 0.7708,
+    "severity": 0.8125
+  },
+  "severity_mae": 0.4375,
+  "disagreements": 30,
+  "intent_confusion": [
+    [
+      "complaint->praise",
+      5
+    ],
+    [
+      "praise->complaint",
+      4
+    ],
+    [
+      "unclear->praise",
+      2
+    ],
+    [
+      "complaint->request",
+      1
+    ],
+    [
+      "praise->unclear",
+      1
+    ]
+  ],
+  "topic_confusion": [
+    [
+      "billing->other",
+      6
+    ],
+    [
+      "access->usability",
+      2
+    ],
+    [
+      "usability->playback",
+      2
+    ],
+    [
+      "usability->billing",
+      2
+    ],
+    [
+      "other->catalog",
+      2
+    ],
+    [
+      "support->usability",
+      1
+    ],
+    [
+      "usability->catalog",
+      1
+    ],
+    [
+      "downloads->billing",
+      1
+    ],
+    [
+      "downloads->catalog",
+      1
+    ],
+    [
+      "playback->usability",
+      1
+    ],
+    [
+      "playback->catalog",
+      1
+    ],
+    [
+      "other->playback",
+      1
+    ],
+    [
+      "billing->playback",
+      1
+    ]
+  ]
+}
