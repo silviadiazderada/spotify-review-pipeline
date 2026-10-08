@@ -1,6 +1,6 @@
 # 100-review cost and runtime report
 
-Generated 2026-10-08 02:43 UTC by `python3 cost/calculator.py` (offline replay: no API key, no model calls). Rates multiplier: 1.0.
+Generated 2026-10-08 16:12 UTC by `python3 cost/calculator.py` (offline replay: no API key, no model calls). Rates multiplier: 1.0.
 
 Input: `cost_100.csv`, sha256 `c884ac3b9be5066995d5063f96ad9af6e5e082975788c1684c4f6b6ea661dd0e` (matches manifest.json). Currency: USD. API spend below is **recomputed** as billed units × editable rates in `rates.csv`; provider-reported totals are in the call log for reconciliation.
 
@@ -77,3 +77,17 @@ Measured on the development checkpoints (`cost/checkpoints.py`, from saved call 
 | analysis_10000 | 10,000 | 171 (2) | 1.2% | $0.0000271 | 47.4 | 0.56 (8) | **$13.16** (conservative ×1.25: $16.45) | **2.4** (conservative ×1.5: 3.7) |
 
 Scaling decision: the 10,000-review checkpoint confirms the pilot's per-text cost within a few percent. The full run uses **16 workers** (measured 1 → 2 → 8; account limits read from response headers: 5,000 RPM / 2,000,000 TPM, far above the ~70 RPM / ~0.35M TPM expected at 16 workers), a **$30 pipeline spend cap** and the provider-side $50 hard monthly limit. Throughput is assumed to scale linearly from 8 to 16 workers; this is an assumption to be checked in the first minutes of the run.
+
+## 4. Actual full run vs. estimate
+
+From the saved full-run call log (`cost/full_run.py`). Measured, not estimated.
+
+| Role | Calls (failed) | Uncached input | Cached input | Output (incl. reasoning) | Cost |
+|---|---|---|---|---|---|
+| enrich | 12,393 (262) | 16,858,395 | 18,520,144 | 22,722,309 | $13.23 |
+| group | 2 (0) | 11,850 | 0 | 3,096 | $0.0027 |
+| memo | 2 (0) | 7,312 | 0 | 1,690 | $0.0315 |
+| verify | 40 (0) | 94,441 | 0 | 62,957 | $0.0409 |
+| **Total** | | | | | **$13.31** |
+
+Records: {'completed': 660600, 'quarantined': 22}. The 10,000-review estimate was $13.16 (conservative $16.45); the actual total including the failed and retried calls is **$13.31**. Costs = provider-reported usage x standard rates in rates.csv; failed calls refused for insufficient_quota reported 0 tokens. Up to 16 in-flight requests were abandoned at each of 3 interruptions; their charges are not in the log (estimated at most ~$0.02 each) - reconcile with the provider usage page. Wall-clock is not a clean measurement: the run spanned an on-camera interruption, an overnight slowdown from a database query-plan bug (fixed), and a pause when prepaid credit ran out.

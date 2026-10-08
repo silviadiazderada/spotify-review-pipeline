@@ -1,0 +1,34 @@
+{
+  "run_id": "full-final-v4",
+  "phase": "resume",
+  "input": "data/raw/spotify_reviews_18months.csv",
+  "input_sha256": "1fc85de68a304dd8978b537cfa58793d5f41cbaf417fa32cb53899f83a2fcef6",
+  "label_config": "gpt-6-luna+effort-none+enrich-v1+schema-v1",
+  "batch_size": 50,
+  "workers": 16,
+  "budget_usd": 2.0,
+  "started_at": "2026-10-08T16:07:29.481+00:00",
+  "ingest": {
+    "rows": 660622,
+    "new": 0,
+    "empty_quarantined": 0
+  },
+  "requeued_quarantined": 0,
+  "already_completed_same_config": 660600,
+  "cache_hits_before_calls": 0,
+  "distinct_texts_to_call": 0,
+  "finished_at": "2026-10-08T16:07:38.813+00:00",
+  "wall_clock_s": 9.37,
+  "stop_reason": null,
+  "record_status": {
+    "completed": 660600,
+    "quarantined": 22
+  },
+  "calls": 0,
+  "failed_calls": 0,
+  "cost_usd": 0,
+  "input_tokens": 0,
+  "cached_input_tokens": 0,
+  "output_tokens": 0,
+  "quote_fallbacks": 0
+}

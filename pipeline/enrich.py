@@ -14,6 +14,7 @@ import argparse
 import json
 import random
 import time
+import uuid
 from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 from datetime import datetime, timezone
 from pathlib import Path
@@ -204,14 +205,16 @@ def log_call(con, run_id, phase, batch_no, attempt, review_ids, resp, error, n_v
     out = getattr(usage, "output_tokens", 0) or 0
     reasoning = getattr(getattr(usage, "output_tokens_details", None), "reasoning_tokens", 0) or 0
     cost = C.call_cost(C.ENRICH_MODEL, inp, cached, out)
-    outcome = "succeeded" if resp is not None and n_valid == len(review_ids) else "failed"
+    # A call that returned usable labels "succeeded" for those records, even if some items were missing (those are
+    # noted in `error` and re-sent in a new, separately logged call). A call with no usable labels "failed".
+    outcome = "succeeded" if resp is not None and n_valid > 0 else "failed"
     if error is None and resp is not None and n_valid < len(review_ids):
         error = f"invalid_or_missing_items: {len(review_ids) - n_valid} of {len(review_ids)} (status={resp.status})"
     con.execute(
         "INSERT INTO calls(request_id, run_id, role, phase, model, effort, label_config, batch_no, attempt, review_ids,"
         " outcome, error, n_valid, input_tokens, cached_tokens, output_tokens, reasoning_tokens, cost_usd, started_at,"
         " duration_s) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-        (getattr(resp, "id", None) or f"local-{run_id}-{batch_no}-{attempt}", run_id, "enrich", phase, C.ENRICH_MODEL,
+        (getattr(resp, "id", None) or f"local-{run_id}-{batch_no}-{attempt}-{uuid.uuid4().hex[:8]}", run_id, "enrich", phase, C.ENRICH_MODEL,
          C.ENRICH_EFFORT, C.ENRICH_LABEL_CONFIG, batch_no, attempt, json.dumps(review_ids), outcome,
          None if error is None else f"{type(error).__name__}: {error}"[:500] if isinstance(error, Exception) else error,
          n_valid, inp, cached, out, reasoning, cost, started, round(seconds, 3)))

@@ -7,7 +7,7 @@ Version this file's rules with RULES_VERSION and rerun group + rank.
 
 import re
 
-RULES_VERSION = "issues-v3"  # v2 (2026-10-07): tuned on checkpoint_500; v3 (2026-10-08): tuned on analysis_10000
+RULES_VERSION = "issues-v4"  # v2: checkpoint_500; v3: analysis_10000; v4 (2026-10-08): "add" verb no longer ads
 
 # topic -> ordered list of (subtopic, regex). Patterns are case-insensitive.
 RULES = {
@@ -20,7 +20,7 @@ RULES = {
         ("plan_purchase_activation", r"\bcan'?t'?\s*(buy|sign ?up|purchase|subscribe)|\bfamily\b|\bduo\b|\bstudent\b|"
                                      r"\btrial\b|\bactivat"),
         ("charges_refunds", r"\bcharg|\brefund|\bbilled|\bbilling\b|\bdeduct|\bpayment|\bcard\b|\bunauthori|\bscam|"
-                            r"\bcancel\w*\b.{0,10}\bsub"),
+                            r"\bcancel\w*\b.{0,30}\b(sub|still|account|money)|\btook my money|\bstill (taking|hitting|paying)"),
         ("price", r"\bpric|\bexpensive|\bcost|\bafford|\bincrease|\bcheap|\bmoney\b|\$|\brs\.?\b|\brupee|\bdollars?\b|"
                   r"\bper month|\bevery month"),
         ("basic_features_paywalled", r"\bbasic\b|\beverything\b.{0,30}\b(premium|paid)|\bforc\w*\b.{0,30}\b(pay|buy|premium|purchase)|"
@@ -30,12 +30,17 @@ RULES = {
                                      r"\bmain features|\bsubscriptions?\b|\bpr[ei]m\w*um"),
     ],
     "usability": [
-        ("ads", r"\bad{1,3}s*\b|\badvert|\bcomm?ercial|\babs\b|\bwerbung|\bpublicit|\banuncio|விளம்பர|\biklan"),
+        # v4: playlist/library additions first, so the verb "add" never lands in the ads issue.
+        ("autoplay_unwanted", r"\bautoplay|\bauto-?play|\bautomatically (start|play|add)|"
+                              r"\badd(s|ed|ing)?\b[^.!?]{0,30}\bto (my|the|your|our)?\s*(playlist|library|liked|queue)|"
+                              r"\badd(s|ed|ing)? (random|different|other|unwanted|new|\d+) (songs?|music|tracks?)"),
+        # v4: "ads"/"ad" and repeated-letter misspellings ("adds", "adddssss"); a bare "add" (verb) is not an ad.
+        ("ads", r"\bads?\b|\badd+s+\b|\baddd+\b|\badvert|\bcomm?ercial|\babs\b|\bwerbung|\bpublicit|\banuncio|"
+                r"விளம்பர|\biklan"),
+
         ("shuffle_skip_limits", r"\bshuffl|\bskips?\b|\bskipping\b|\brepeat\b|\bdifferent (song|artist)|\bnever heard|"
                                 r"\bsame songs?\b|\brandom songs?|\bin order\b|\b(music|song)\b.{0,15}\b(we|you|i)\b.{0,10}\bwant|"
                                 r"\bdidn'?t (select|choose|pick)|\b(does|plays?) (a |an )?(another|other) song"),
-        ("autoplay_unwanted", r"\bautoplay|\bauto-?play|\bautomatically (start|play)|\badd(s|ed|ing)? (a )?songs?|"
-                              r"\badds? (music|songs)"),
         ("redesign_ui", r"\bupdate|\bnew (design|layout|ui|look|interface|version)|\binterface\b|\blayout\b|"
                         r"\bhome ?(screen|page)\b|\bui\b|\bdesign\b|\bchang(ed|ing|e)\b|\bformat\b|\bugly\b|\bdisappeared\b"),
         ("library_playlists_queue", r"\bqueue|\bplaylist|\blibrary\b|\bsort|\bliked songs\b|\bfolder|\bnext\b"),

@@ -11,7 +11,7 @@ from pipeline import config as C
 from pipeline import issue_rules, llm
 
 PROMPT = (C.PROMPTS / f"{C.GROUP_PROMPT_VERSION}.txt").read_text()
-GROUP_CONFIG = f"{C.GROUP_MODEL}+effort-{C.GROUP_EFFORT}+{C.GROUP_PROMPT_VERSION}+{issue_rules.RULES_VERSION}"
+GROUP_CONFIG = f"{C.GROUP_MODEL}+effort-{C.GROUP_EFFORT}+{C.GROUP_PROMPT_VERSION}+{issue_rules.RULES_VERSION}+examples-hash"
 SCHEMA = {
     "type": "object",
     "properties": {"issues": {"type": "array", "items": {
@@ -37,8 +37,10 @@ def assign(con):
 
 
 def examples(rows, members, k):
-    """Deterministic, bounded evidence: up to k distinct quotes per issue, highest severity first."""
-    ordered = sorted(members, key=lambda i: (-rows[i]["severity"], hashlib.sha256(i.encode()).hexdigest()))
+    """Deterministic, bounded evidence: up to k distinct quotes per issue in pseudo-random (hash) order, so the
+    examples are typical members. (v1 took the highest-severity members first; at full scale that surfaced rare
+    extremes - e.g. duplicate charges - and the issue names described the extremes, not the typical complaint.)"""
+    ordered = sorted(members, key=lambda i: hashlib.sha256(i.encode()).hexdigest())
     out, seen = [], set()
     for i in ordered:
         q = rows[i]["quote"][:200]

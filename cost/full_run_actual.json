@@ -1,0 +1,100 @@
+{
+  "record_status": {
+    "completed": 660600,
+    "quarantined": 22
+  },
+  "by_role": {
+    "enrich": {
+      "calls": 12393,
+      "failed": 262,
+      "input_tokens": 35378539,
+      "cached_input_tokens": 18520144,
+      "output_tokens": 22722309,
+      "reasoning_tokens": 0,
+      "cost_usd": 13.2322
+    },
+    "group": {
+      "calls": 2,
+      "failed": 0,
+      "input_tokens": 11850,
+      "cached_input_tokens": 0,
+      "output_tokens": 3096,
+      "reasoning_tokens": 80,
+      "cost_usd": 0.0027
+    },
+    "memo": {
+      "calls": 2,
+      "failed": 0,
+      "input_tokens": 7312,
+      "cached_input_tokens": 0,
+      "output_tokens": 1690,
+      "reasoning_tokens": 68,
+      "cost_usd": 0.0315
+    },
+    "verify": {
+      "calls": 40,
+      "failed": 0,
+      "input_tokens": 94441,
+      "cached_input_tokens": 0,
+      "output_tokens": 62957,
+      "reasoning_tokens": 25819,
+      "cost_usd": 0.0409
+    }
+  },
+  "by_run": [
+    {
+      "run_id": "full-initial",
+      "phase": "initial",
+      "first_call": "2026-10-08T04:13:29.453+00:00",
+      "last_call": "2026-10-08T04:13:29.455+00:00",
+      "calls": 10,
+      "cost_usd": 0.013
+    },
+    {
+      "run_id": "full-resume",
+      "phase": "resume",
+      "first_call": "2026-10-08T04:17:12.775+00:00",
+      "last_call": "2026-10-08T14:07:26.024+00:00",
+      "calls": 7641,
+      "cost_usd": 8.194
+    },
+    {
+      "run_id": "full-resume-2",
+      "phase": "resume",
+      "first_call": "2026-10-08T14:08:49.723+00:00",
+      "last_call": "2026-10-08T15:02:09.921+00:00",
+      "calls": 1504,
+      "cost_usd": 1.4234
+    },
+    {
+      "run_id": "full-resume-3",
+      "phase": "resume",
+      "first_call": "2026-10-08T15:04:47.404+00:00",
+      "last_call": "2026-10-08T15:52:29.296+00:00",
+      "calls": 3238,
+      "cost_usd": 3.6017
+    },
+    {
+      "run_id": "full-final",
+      "phase": "resume",
+      "first_call": "2026-10-08T15:53:56.973+00:00",
+      "last_call": "2026-10-08T16:05:52.784+00:00",
+      "calls": 42,
+      "cost_usd": 0.0581
+    },
+    {
+      "run_id": "full-final-v4",
+      "phase": "resume",
+      "first_call": "2026-10-08T16:07:53.745+00:00",
+      "last_call": "2026-10-08T16:08:29.657+00:00",
+      "calls": 2,
+      "cost_usd": 0.0171
+    }
+  ],
+  "total_cost_usd": 13.3074,
+  "notes": [
+    "Costs = provider-reported usage x standard rates in rates.csv; failed calls refused for insufficient_quota reported 0 tokens.",
+    "Up to 16 in-flight requests were abandoned at each of 3 interruptions; their charges are not in the log (estimated at most ~$0.02 each) - reconcile with the provider usage page.",
+    "Wall-clock is not a clean measurement: the run spanned an on-camera interruption, an overnight slowdown from a database query-plan bug (fixed), and a pause when prepaid credit ran out."
+  ]
+}

@@ -285,6 +285,19 @@ def report(rates_multiplier=1.0):
           f"expected at {a['full_run_workers']} workers), a **${a['full_run_budget_usd']:.0f} pipeline spend cap** and the "
           f"provider-side ${a['budget_usd']:.0f} hard monthly limit. Throughput is assumed to scale linearly from 8 to "
           f"{a['full_run_workers']} workers; this is an assumption to be checked in the first minutes of the run.")
+    fr_path = HERE / "full_run_actual.json"
+    if fr_path.exists():
+        fr = json.loads(fr_path.read_text())
+        w("\n## 4. Actual full run vs. estimate")
+        w("\nFrom the saved full-run call log (`cost/full_run.py`). Measured, not estimated.\n")
+        w("| Role | Calls (failed) | Uncached input | Cached input | Output (incl. reasoning) | Cost |\n|---|---|---|---|---|---|")
+        for role, x in fr["by_role"].items():
+            w(f"| {role} | {x['calls']:,} ({x['failed']}) | {x['input_tokens'] - x['cached_input_tokens']:,} | "
+              f"{x['cached_input_tokens']:,} | {x['output_tokens']:,} | {usd(x['cost_usd'] * rates_multiplier)} |")
+        total = fr["total_cost_usd"] * rates_multiplier
+        w(f"| **Total** | | | | | **{usd(total)}** |")
+        w(f"\nRecords: {fr['record_status']}. The 10,000-review estimate was $13.16 (conservative $16.45); the actual "
+          f"total including the failed and retried calls is **{usd(total)}**. " + " ".join(fr["notes"]))
     (HERE / "report.md").write_text("\n".join(L) + "\n")
     print("\n".join(L))
 

@@ -35,7 +35,7 @@ VERIFY_MAX_OUTPUT_TOKENS = 12000  # low effort may add reasoning tokens (billed 
 GROUP_MODEL = "gpt-6-luna"
 GROUP_EFFORT = "low"
 GROUP_PROMPT_VERSION = "group-v1"
-GROUP_EXAMPLES_PER_ISSUE = 8
+GROUP_EXAMPLES_PER_ISSUE = 12
 
 # --- Memo role (one call over saved aggregates + bounded evidence pack) ---
 MEMO_MODEL = "gpt-6.1-sol"

@@ -4,6 +4,7 @@ inspectable call-log row, and a per-run spending check. Enrichment has its own o
 import hashlib
 import json
 import time
+import uuid
 from datetime import datetime, timezone
 
 from pipeline import config as C
@@ -68,7 +69,7 @@ def log_call(con, *, run_id, role, phase, model, effort, config, batch_no, attem
             "INSERT INTO calls(request_id, run_id, role, phase, model, effort, label_config, batch_no, attempt,"
             " review_ids, outcome, error, n_valid, input_tokens, cached_tokens, output_tokens, reasoning_tokens,"
             " cost_usd, started_at, duration_s) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-            (getattr(resp, "id", None) or f"local-{run_id}-{role}-{batch_no}-{attempt}", run_id, role, phase, model,
+            (getattr(resp, "id", None) or f"local-{run_id}-{role}-{batch_no}-{attempt}-{uuid.uuid4().hex[:8]}", run_id, role, phase, model,
              effort, config, batch_no, attempt, json.dumps(review_ids), "succeeded" if ok else "failed", error,
              n_valid, inp, cached, out, reasoning, cost, started, round(seconds, 3)))
     return cost

@@ -3,6 +3,7 @@ Pending rows (never classified) are exported as quarantined with an explicit rea
 accounted for, but they are not successful classifications."""
 
 import json
+import re
 from pathlib import Path
 
 
@@ -41,10 +42,20 @@ def write_calls(con, path, run_ids=None):
     n = 0
     with path.open("w", encoding="utf-8") as f:
         for c in con.execute(q, run_ids or []):
+            # Calls logged before 2026-10-08 used two conventions fixed here (see DECISIONS D12): provider-less
+            # local IDs could repeat for per-review retries (made unique with the call row number), and enrichment
+            # calls that returned SOME valid labels were logged "failed" (they succeeded for those records).
+            request_id = c["request_id"]
+            if request_id.startswith("local-") and not re.search(r"-[0-9a-f]{8}$", request_id):
+                request_id = f"{request_id}-c{c['call_id']}"
+            outcome = c["outcome"]
+            if c["role"] == "enrich" and outcome == "failed" and (c["n_valid"] or 0) > 0:
+                outcome = "succeeded"
             f.write(json.dumps({
-                "request_id": c["request_id"], "run_id": c["run_id"], "role": c["role"],
+                "request_id": request_id, "run_id": c["run_id"], "role": c["role"],
                 "review_ids": json.loads(c["review_ids"] or "[]"), "model": c["model"], "effort": c["effort"],
-                "phase": c["phase"], "outcome": c["outcome"], "label_config": c["label_config"],
+                "phase": c["phase"], "outcome": outcome, "label_config": c["label_config"],
+                "n_valid": c["n_valid"],
                 "batch_no": c["batch_no"], "attempt": c["attempt"], "error": c["error"],
                 "input_tokens": c["input_tokens"], "cached_input_tokens": c["cached_tokens"],
                 "output_tokens": c["output_tokens"], "reasoning_tokens": c["reasoning_tokens"],

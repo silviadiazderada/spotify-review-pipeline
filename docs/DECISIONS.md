@@ -264,3 +264,59 @@ Input `spotify_reviews_18months.csv` (sha256 `1fc85de6…2fcef6`). State `state/
   - the chat-assistant window segments were cut, keeping only the 10 Terminal segments in order, with timestamps detected by frame brightness;
   - the Terminal tab bar (unrelated project names) was pixelated, with the layout detected per quarter-second.
 - No Terminal output was altered. The unedited original is kept privately.
+
+## D12: Final stages, issue rules v4, grading export (2026-10-08)
+
+### Run `full-final`
+
+- Verify: 2,000 sampled texts. Agreement: intent 94.4%, topic 86.7%, severity 89.9%, severity MAE 0.11.
+- Group: 296,981 complaint/cancellation records in 40 issues.
+- Memo check passed.
+
+### Problem found when reading the output: misleading issue names
+
+- The ads issue was named "Unexpected Ads and Playlist Changes".
+- `basic_features_paywalled` was named "Unexpected or Duplicate Subscription Charges".
+
+Two causes, both in our code:
+1. **Keyword rule.** The v3 ads rule `\bad{1,3}s*\b` matched the verb "add" ("STOP ADDING SONGS…" via "add"), which pulled playlist-addition complaints into ads.
+2. **Example selection.** Naming examples were picked highest-severity first. At full scale that surfaced rare extremes (duplicate charges), so the names described the extremes rather than the typical member.
+
+Fixes:
+- **Rules v4:** `autoplay_unwanted` (songs added *to* a playlist/library, autoplay) is checked before `ads`. `ads` matches "ad(s)" and repeated-letter misspellings, but never a bare "add". `charges_refunds` also catches "cancelled but still charged".
+- **Examples:** sampled in hash order (typical members), 12 per issue.
+- Re-ran as `full-final-v4`: verify was cached (0 calls); only naming and memo re-ran ($0.017). All 40 names now match a random sample of members.
+
+### Final ranking (baseline)
+
+| Rank | Issue | Priority score |
+|---|---|---|
+| 1 | other-general | 179,259 |
+| 2 | billing-basic_features_paywalled | 81,875 |
+| 3 | usability-ads | 77,553 |
+| 4 | usability-shuffle_skip_limits | 42,713 |
+| 5 | billing-premium_only_controls | 34,374 |
+
+### Memo recommendation
+
+- **Usability**: ads, then shuffle/skip restrictions.
+- Billing/support is the strongest alternative: its share of complaints rose from 11.1% to 20.6% between comparable windows.
+- The cross-area theme "free-tier restrictions" is 18.6% of complaints.
+
+### Grading export and self-check (`check_submission.py`)
+
+- `working_coverage_point_candidate` = **1.0**: 660,622/660,622 accounted for, 660,600 valid completions, 176,420 valid exact-text cache reuses.
+- The ranking recomputed identically, claims matched, all 4 roles present, and the resume evidence was accepted.
+- **Remaining flag: `unfinished_classification: 9`.** These are the honest quarantines.
+
+### Call-log conventions fixed during export
+
+Neither change alters any label.
+1. Provider-less local request IDs repeated for per-review retries during the credit outage. They are now unique.
+2. Enrichment calls that returned *some* valid labels had been logged `failed`. They are now `succeeded`, with the missing items noted in `error` and re-sent in a separate logged call.
+
+### Actual full-run cost
+
+- **$13.31**: enrich $13.23, verify $0.04, memo $0.03, group $0.003.
+- The 10k-checkpoint estimate was $13.16, so the actual came in about 1% over.
+- 52% of enrichment input tokens were billed at the cached rate (provider prompt caching).

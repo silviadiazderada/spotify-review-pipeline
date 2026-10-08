@@ -1,0 +1,433 @@
+{
+  "scope": {
+    "source_rows": 660622,
+    "completed_classifications": 660600,
+    "not_classified": 22,
+    "record_status": {
+      "completed": 660600,
+      "quarantined:invalid_model_output_after_retry": 9,
+      "quarantined:empty_review_text": 13
+    },
+    "first_review": "2022-05-17 00:01:07",
+    "last_review": "2023-11-15 23:16:10"
+  },
+  "intent_counts": {
+    "complaint": 266817,
+    "praise": 286883,
+    "request": 17086,
+    "cancellation": 30164,
+    "unclear": 59650
+  },
+  "complaint_and_cancellation_records": 296981,
+  "complaints_share_of_completed": "45.0%",
+  "cancellation_intent_records": 30164,
+  "decision_areas": {
+    "playback": {
+      "complaint_records": 45844,
+      "severity_sum": 151675,
+      "share_of_complaints": "15.4%"
+    },
+    "billing/support": {
+      "complaint_records": 52582,
+      "severity_sum": 149237,
+      "share_of_complaints": "17.7%"
+    },
+    "outside the four areas": {
+      "complaint_records": 107089,
+      "severity_sum": 232702,
+      "share_of_complaints": "36.1%"
+    },
+    "usability": {
+      "complaint_records": 81280,
+      "severity_sum": 206128,
+      "share_of_complaints": "27.4%"
+    },
+    "access": {
+      "complaint_records": 10186,
+      "severity_sum": 39433,
+      "share_of_complaints": "3.4%"
+    }
+  },
+  "ranking_rule": "priority_score = complaint_count x mean_severity = severity_sum; one issue per complaint",
+  "issues_ranked_total": 40,
+  "top_issues": [
+    {
+      "rank": 1,
+      "issue_id": "ISS-other-general",
+      "name": "Mixed Privacy and Account Complaints",
+      "description": "Mixed complaints mention privacy concerns, data collection, and missing account content.",
+      "decision_area": "outside the four areas",
+      "complaint_count": {
+        "value": "88142",
+        "claim_id": "C001"
+      },
+      "severity_sum": {
+        "value": "179259",
+        "claim_id": "C002"
+      },
+      "mean_severity": {
+        "value": "2.033752",
+        "claim_id": "C003"
+      },
+      "priority_score": {
+        "value": "179259",
+        "claim_id": "C004"
+      },
+      "evidence": [
+        {
+          "review_id": "f9ad8f06-6a4a-421c-8b1e-eaf2216f6a79",
+          "quote": "my privacy has been breached",
+          "severity": 5
+        },
+        {
+          "review_id": "6f64e42a-723f-46de-b392-70dafbb27769",
+          "quote": "it collects your data and sell it to different companies",
+          "severity": 5
+        },
+        {
+          "review_id": "95237f59-b7ab-4ea1-ae8d-3aa9b69d0ae1",
+          "quote": "Spotify has deleted everything on my account.",
+          "severity": 5
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "issue_id": "ISS-usability-ads",
+      "name": "Unexpected Ads and Playlist Changes",
+      "description": "Customers mention loud ads, unwanted songs added to playlists, and other mixed concerns about app behavior.",
+      "decision_area": "usability",
+      "complaint_count": {
+        "value": "39321",
+        "claim_id": "C005"
+      },
+      "severity_sum": {
+        "value": "87956",
+        "claim_id": "C006"
+      },
+      "mean_severity": {
+        "value": "2.236871",
+        "claim_id": "C007"
+      },
+      "priority_score": {
+        "value": "87956",
+        "claim_id": "C008"
+      },
+      "evidence": [
+        {
+          "review_id": "74db636c-af63-42d1-88aa-822f983d3a17",
+          "quote": "I've been using this app since 2012 and I absolutely love it. Would never use anything else, BUT...there are some bugs that have become increasingly apparent over these last couple of months. WHY IS M",
+          "severity": 5
+        },
+        {
+          "review_id": "14ddb9c7-be1d-4179-bed2-bce7d785a8df",
+          "quote": "data bhi churati hai",
+          "severity": 5
+        },
+        {
+          "review_id": "df87f280-77a2-4fb7-815f-a6b50d5f2beb",
+          "quote": "STOP ADDING SONGS TO MY PLAYLIST!!! I HAVE 4 DIFFERENT PLAYLISTS, BUT ALSO HAVE ONE SPECIFIC PLAYLIST WITH 3 SPECIFIC SONGS...ONLY 3 SONGS!!! YET, EVERY TIME THE PLAYLIST PLAYS, IT HAS ADDITIONAL SONG",
+          "severity": 5
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "issue_id": "ISS-billing-basic_features_paywalled",
+      "name": "Unexpected or Duplicate Subscription Charges",
+      "description": "Customers describe duplicate or continued charges, lost subscription time, or missing refunds.",
+      "decision_area": "billing/support",
+      "complaint_count": {
+        "value": "29183",
+        "claim_id": "C009"
+      },
+      "severity_sum": {
+        "value": "81934",
+        "claim_id": "C010"
+      },
+      "mean_severity": {
+        "value": "2.807593",
+        "claim_id": "C011"
+      },
+      "priority_score": {
+        "value": "81934",
+        "claim_id": "C012"
+      },
+      "evidence": [
+        {
+          "review_id": "f1add51f-fad3-488f-9fcc-3ac4ddc36e32",
+          "quote": "it overcharge for services always",
+          "severity": 5
+        },
+        {
+          "review_id": "b697b0d7-f49f-43e1-8fde-31ccecd894eb",
+          "quote": "My subscription, although cancelled, still is hitting my account.",
+          "severity": 5
+        },
+        {
+          "review_id": "d8b50740-27c1-4add-a46f-5027e0e0bac1",
+          "quote": "debited me twice for the individual premium",
+          "severity": 5
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "issue_id": "ISS-usability-shuffle_skip_limits",
+      "name": "Shuffle Plays Unwanted Songs",
+      "description": "Customers report random songs being added or played instead of their selected music.",
+      "decision_area": "usability",
+      "complaint_count": {
+        "value": "14436",
+        "claim_id": "C013"
+      },
+      "severity_sum": {
+        "value": "42512",
+        "claim_id": "C014"
+      },
+      "mean_severity": {
+        "value": "2.944860",
+        "claim_id": "C015"
+      },
+      "priority_score": {
+        "value": "42512",
+        "claim_id": "C016"
+      },
+      "evidence": [
+        {
+          "review_id": "7a9422f5-7266-4f53-adf3-7cc65803e8bf",
+          "quote": "i look at them then search on reddit about them they are BOTS or hacker",
+          "severity": 5
+        },
+        {
+          "review_id": "9d48b8de-4884-40fb-af14-4c1aa61d7d3d",
+          "quote": "I have lost so many songs from my likes",
+          "severity": 5
+        },
+        {
+          "review_id": "550bddf1-1cf4-400e-8330-5cd93ce6be00",
+          "quote": "PC local music files? Mysteriously deleted while trying to disable Smart Shuffle.",
+          "severity": 5
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "issue_id": "ISS-billing-premium_only_controls",
+      "name": "Mixed Billing and Music Complaints",
+      "description": "Mixed complaints mention missing songs, payment controls, charges, and other account concerns without one consistent billing problem.",
+      "decision_area": "billing/support",
+      "complaint_count": {
+        "value": "11415",
+        "claim_id": "C017"
+      },
+      "severity_sum": {
+        "value": "34374",
+        "claim_id": "C018"
+      },
+      "mean_severity": {
+        "value": "3.011301",
+        "claim_id": "C019"
+      },
+      "priority_score": {
+        "value": "34374",
+        "claim_id": "C020"
+      },
+      "evidence": [
+        {
+          "review_id": "645ec0e5-2cd4-43f3-92f6-eaba60e46730",
+          "quote": "Nearly 1000 songs all gone!!",
+          "severity": 5
+        },
+        {
+          "review_id": "cf425dbc-3a31-4b6c-8e31-5037f397e864",
+          "quote": "not possible to remove auto-pay from the application of phone pay",
+          "severity": 5
+        },
+        {
+          "review_id": "224cdefe-2664-43e5-a890-44756934ca10",
+          "quote": "considering data was leaked and shared",
+          "severity": 5
+        }
+      ]
+    },
+    {
+      "rank": 6,
+      "issue_id": "ISS-playback-general",
+      "name": "Mixed Playback and Library Complaints",
+      "description": "Mixed complaints mention lost music, missing downloads, and other problems without one specific playback defect.",
+      "decision_area": "playback",
+      "complaint_count": {
+        "value": "9659",
+        "claim_id": "C021"
+      },
+      "severity_sum": {
+        "value": "31948",
+        "claim_id": "C022"
+      },
+      "mean_severity": {
+        "value": "3.307589",
+        "claim_id": "C023"
+      },
+      "priority_score": {
+        "value": "31948",
+        "claim_id": "C024"
+      },
+      "evidence": [
+        {
+          "review_id": "9f29c0ac-9461-4098-98e6-2bbed15d0392",
+          "quote": "my whole library is gone",
+          "severity": 5
+        },
+        {
+          "review_id": "6dd88411-cf5d-4334-8f1d-6db6eb5c6107",
+          "quote": "running my phone bill through the roof for some reason",
+          "severity": 5
+        },
+        {
+          "review_id": "0834a740-a550-4e67-b4ef-128a78940f6b",
+          "quote": "all my play lists had been wipped clean",
+          "severity": 5
+        }
+      ]
+    },
+    {
+      "rank": 7,
+      "issue_id": "ISS-playback-crashes_wont_open",
+      "name": "Mixed Playback and Library Problems",
+      "description": "Mixed complaints mention lost music, playback difficulties, and other concerns without one consistent playback defect.",
+      "decision_area": "playback",
+      "complaint_count": {
+        "value": "7779",
+        "claim_id": "C025"
+      },
+      "severity_sum": {
+        "value": "27915",
+        "claim_id": "C026"
+      },
+      "mean_severity": {
+        "value": "3.588508",
+        "claim_id": "C027"
+      },
+      "priority_score": {
+        "value": "27915",
+        "claim_id": "C028"
+      },
+      "evidence": [
+        {
+          "review_id": "1730c0f6-e36b-4e2b-b1a2-547922f89673",
+          "quote": "I've lost years of curated content",
+          "severity": 5
+        },
+        {
+          "review_id": "2e31a430-8ea3-4556-8c3d-5196d5937fcc",
+          "quote": "all the playlist made are gone",
+          "severity": 5
+        },
+        {
+          "review_id": "42109958-6f77-421d-a0cb-93fe8f4c0991",
+          "quote": "I lost all my music.. all gone..",
+          "severity": 5
+        }
+      ]
+    },
+    {
+      "rank": 8,
+      "issue_id": "ISS-usability-redesign_ui",
+      "name": "Update-Related Library and Interface Problems",
+      "description": "Customers describe missing music or unexpected changes to liked songs after using or updating the app.",
+      "decision_area": "usability",
+      "complaint_count": {
+        "value": "9005",
+        "claim_id": "C029"
+      },
+      "severity_sum": {
+        "value": "23697",
+        "claim_id": "C030"
+      },
+      "mean_severity": {
+        "value": "2.631538",
+        "claim_id": "C031"
+      },
+      "priority_score": {
+        "value": "23697",
+        "claim_id": "C032"
+      },
+      "evidence": [
+        {
+          "review_id": "063e8e19-ae26-4325-9a00-0d9408682a56",
+          "quote": "I've lost so many good songs I'll never find again.",
+          "severity": 5
+        },
+        {
+          "review_id": "af25b8cd-f5ce-4e81-a5b5-5d5bb31e2e81",
+          "quote": "all of my playlist suddenly disappeared",
+          "severity": 5
+        },
+        {
+          "review_id": "80e4d783-a1b7-476e-93cd-752a9e479513",
+          "quote": "this update automatically added all songs in my New Music playlist to my Liked Songs",
+          "severity": 5
+        }
+      ]
+    }
+  ],
+  "verification": {
+    "sampled": 2000,
+    "verified": 2000,
+    "agreement": {
+      "intent": 0.944,
+      "topic": 0.8665,
+      "severity": 0.899
+    },
+    "severity_mae": 0.1135
+  },
+  "cross_area_themes": {
+    "note": "The shared taxonomy files Premium-locked controls and paywalls under billing but shuffle/skip limits and ads under usability; these code-defined themes add up the related issues across areas.",
+    "free_tier_restrictions": {
+      "issues": [
+        "ISS-billing-premium_only_controls",
+        "ISS-billing-basic_features_paywalled",
+        "ISS-usability-shuffle_skip_limits"
+      ],
+      "complaint_records": 55034,
+      "severity_sum": 158820,
+      "share_of_complaints": "18.5%"
+    },
+    "ads": {
+      "issues": [
+        "ISS-usability-ads"
+      ],
+      "complaint_records": 39321,
+      "severity_sum": 87956,
+      "share_of_complaints": "13.2%"
+    }
+  },
+  "trend_comparable_periods": {
+    "note": "Shares among completed reviews in two comparable 6-month windows; first and last calendar months of the data are partial and excluded. Review volume is self-selected and varies by month.",
+    "Jun-Nov 2022": {
+      "completed_reviews": 175703,
+      "complaint_records": 54372,
+      "complaint_share_of_reviews": "30.9%",
+      "area_share_of_complaints": {
+        "access": "3.7%",
+        "billing/support": "11.1%",
+        "outside the four areas": "17.0%",
+        "playback": "28.8%",
+        "usability": "39.5%"
+      }
+    },
+    "May-Oct 2023": {
+      "completed_reviews": 301425,
+      "complaint_records": 168398,
+      "complaint_share_of_reviews": "55.9%",
+      "area_share_of_complaints": {
+        "access": "3.4%",
+        "billing/support": "20.6%",
+        "outside the four areas": "46.4%",
+        "playback": "9.0%",
+        "usability": "20.7%"
+      }
+    }
+  }
+}
