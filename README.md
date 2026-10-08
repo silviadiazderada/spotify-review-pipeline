@@ -6,7 +6,7 @@
 
 The recommendation comes from a multi-agent pipeline that classified **660,600 of 660,609** non-empty Google Play reviews (May 2022 – Nov 2023) for **$13.31** of model spend.
 
-- **Live dashboard:** **DASHBOARD_URL**. It is public and read-only; no login is needed.
+- **Live dashboard:** **https://spotify-review-pipeline.vercel.app**. It is public and read-only; no login is needed.
 - **Grading export:** [`grading/`](grading/). The course self-check gives `working_coverage_point_candidate = 1.0`.
 - **Decisions log** (what we chose, what broke, how we fixed it): [`docs/DECISIONS.md`](docs/DECISIONS.md)
 
@@ -151,7 +151,7 @@ cd dashboard && npm install && npm run dev    # needs DATABASE_URL in dashboard/
 | **T3** Real cold/warm pilot, calculator, retry/spend/recovery controls | [`cost/report.md`](cost/report.md), [`cost/README.md`](cost/README.md) · [`evals/failure_paths/`](evals/failure_paths/) · [resume video](evidence/resume_demo_redacted.mp4) |
 | **W1** Full ingestion, coverage, classification | [`grading/`](grading/) · [`evals/self-check.json`](evals/self-check.json) (coverage candidate 1.0) |
 | **W2** Staged program, bounded calls, saved handoffs, resume | [`pipeline/`](pipeline/) · [`grading/calls.jsonl`](grading/calls.jsonl) (≤50 IDs per enrich call) · `checkpoint_before/after.json` + video |
-| **W3** Reproducible ranking and deployed dashboard | `python -m pipeline rank` · **DASHBOARD_URL** · [`dashboard/`](dashboard/) · [`scripts/load_db.py`](scripts/load_db.py) |
+| **W3** Reproducible ranking and deployed dashboard | `python -m pipeline rank` · **https://spotify-review-pipeline.vercel.app** · [`dashboard/`](dashboard/) · [`scripts/load_db.py`](scripts/load_db.py) |
 
 ---
 
@@ -189,7 +189,7 @@ The enrichment prompt is [`pipeline/prompts/enrich-v1.txt`](pipeline/prompts/enr
 3. **Verify.** The independent verifier, without seeing step 2, also said complaint · billing · 3. All three fields agree.
 4. **Group.** Code rule → `ISS-billing-basic_features_paywalled`.
 5. **Rank.** Rank **2**: 29,166 complaints × mean severity 2.807207 = priority **81,875**.
-6. **Memo.** Cited as claims `C005`–`C008`. You can [open this review on the dashboard](DASHBOARD_URL/review/b94d2dca-b654-47ae-acfe-489c3a097021).
+6. **Memo.** Cited as claims `C005`–`C008`. You can [open this review on the dashboard](https://spotify-review-pipeline.vercel.app/review/b94d2dca-b654-47ae-acfe-489c3a097021).
 
 ## One failed case
 

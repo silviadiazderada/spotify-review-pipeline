@@ -120,6 +120,17 @@ def main(state, outputs):
         for k, v in saved.items():
             if v is not None:
                 pg.execute("INSERT INTO outputs VALUES (%s, %s)", (k, json.dumps(v)))
+        # Precomputed overview counts (the dashboard reads these instead of scanning 660k rows per visit).
+        overview = {
+            "status": [dict(zip(("status", "reason", "n"), r)) for r in pg.execute(
+                "SELECT status, reason, COUNT(*)::int FROM reviews GROUP BY status, reason ORDER BY 3 DESC").fetchall()],
+            "intents": [dict(zip(("intent", "n"), r)) for r in pg.execute(
+                "SELECT intent, COUNT(*)::int FROM reviews WHERE status='completed' GROUP BY intent ORDER BY 2 DESC").fetchall()],
+            "areas": [dict(zip(("area", "complaints", "severity_sum"), r)) for r in pg.execute(
+                "SELECT area, COUNT(*)::int, SUM(severity)::int FROM reviews WHERE status='completed'"
+                " AND intent IN ('complaint','cancellation') GROUP BY area ORDER BY 3 DESC").fetchall()],
+        }
+        pg.execute("INSERT INTO outputs VALUES (%s, %s)", ("overview_counts", json.dumps(overview)))
         pg.execute(INDEXES)
         pg.execute("ANALYZE")
     with psycopg.connect(os.environ["DATABASE_URL"]) as pg:

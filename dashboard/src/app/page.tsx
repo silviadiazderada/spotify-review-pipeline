@@ -43,7 +43,7 @@ export default function OverviewPage() {
     <main>
       <div className="tiles">
         <Tile label="Source reviews" value={fmt(total)} sub="every original ID accounted for" />
-        <Tile label="Classified" value={fmt(by("completed"))} sub={`${((100 * by("completed")) / total).toFixed(2)}% of rows`} />
+        <Tile label="Classified" value={fmt(by("completed"))} sub={`${(Math.floor((100000 * by("completed")) / total) / 1000).toFixed(3)}% of rows`} />
         <Tile label="Quarantined / pending" value={`${fmt(by("quarantined"))} / ${fmt(by("pending"))}`} sub="with recorded reasons" />
         <Tile label="Complaints + cancellations" value={fmt(d.pack?.complaint_and_cancellation_records)}
           sub={`${d.pack?.complaints_share_of_completed ?? "–"} of classified`} />
