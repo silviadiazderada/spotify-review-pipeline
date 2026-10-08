@@ -21,7 +21,8 @@ from pathlib import Path
 import psycopg
 from dotenv import load_dotenv
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+ROOT_DIR = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT_DIR))
 from pipeline.memo import AREAS  # noqa: E402
 
 DDL = """
@@ -58,6 +59,58 @@ def read_csv(path):
 def maybe_json(path):
     p = Path(path)
     return json.loads(p.read_text()) if p.exists() else None
+
+
+def refresh_outputs(state, outputs):
+    """Replace only the small analysis tables (issues, claims, outputs) inside one transaction. Use when the
+    labelled reviews and issue membership are unchanged (e.g. a re-written memo)."""
+    load_dotenv()
+    out = Path(outputs)
+    src = sqlite3.connect(state)
+    src.row_factory = sqlite3.Row
+    ranking = {r["issue_id"]: r for r in read_csv(out / "ranking.csv")}
+    issues = read_csv(out / "issues.csv")
+    with psycopg.connect(os.environ["DATABASE_URL"], connect_timeout=30) as pg, pg.transaction():
+        same = pg.execute("SELECT COUNT(*) FROM reviews WHERE issue_id IS NOT NULL").fetchone()[0]
+        if same != len(read_csv(out / "membership.csv")):
+            raise SystemExit("membership changed - run a full load instead")
+        overview = pg.execute("SELECT content FROM outputs WHERE key='overview_counts'").fetchone()
+        pg.execute("DELETE FROM issues; DELETE FROM claims; DELETE FROM outputs")
+        for i in issues:
+            rk = ranking[i["issue_id"]]
+            pg.execute("INSERT INTO issues VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
+                       (i["issue_id"], i["topic"], i["subtopic"], AREAS[i["topic"]], i["name"], i["description"],
+                        int(rk["rank"]), int(rk["complaint_count"]), int(rk["severity_sum"]), rk["mean_severity"],
+                        int(rk["priority_score"]), i["example_review_ids"].split()))
+        for c in read_csv(out / "claims.csv"):
+            pg.execute("INSERT INTO claims VALUES (%s,%s,%s,%s)", (c["claim_id"], c["issue_id"], c["metric"], c["value"]))
+        for k, v in saved_outputs(out, src).items():
+            if v is not None:
+                pg.execute("INSERT INTO outputs VALUES (%s, %s)", (k, json.dumps(v)))
+        if overview:
+            pg.execute("INSERT INTO outputs VALUES ('overview_counts', %s)", (json.dumps(overview[0]),))
+    print(f"Refreshed {len(issues)} issues, claims and outputs from {out}")
+
+
+def saved_outputs(out, src):
+    return {
+        "memo_md": {"markdown": (out / "memo.md").read_text()} if (out / "memo.md").exists() else None,
+        "memo_check": maybe_json(out / "memo_check.json"),
+        "memo_audit": maybe_json(ROOT_DIR / "evals" / "memo_audit.json"),
+        "evidence_pack": maybe_json(out / "evidence_pack.json"),
+        "verify_report": maybe_json(out / "verify_report.json"),
+        "run_summary": maybe_json(out / "run_summary.json"),
+        "golden_eval": maybe_json("evals/golden_eval/summary.json"),
+        "planted_gross": maybe_json("evals/planted_error/gross/planted_error_results.json"),
+        "planted_subtle": maybe_json("evals/planted_error/subtle/planted_error_results.json"),
+        "injection": maybe_json("evals/injection/injection_results.json"),
+        "failure_paths": maybe_json("evals/failure_paths/failure_path_results.json"),
+        "cost_checkpoints": maybe_json("cost/checkpoints.json"),
+        "cost_pilot_runs": maybe_json("cost/pilot_runs.json"),
+        "full_run_cost": {"by_run": [dict(r) for r in src.execute(
+            "SELECT run_id, phase, role, COUNT(*) AS calls, SUM(outcome='failed') AS failed,"
+            " ROUND(SUM(cost_usd), 4) AS cost_usd FROM calls GROUP BY run_id, phase, role ORDER BY MIN(call_id)")]},
+    }
 
 
 def main(state, outputs):
@@ -100,23 +153,7 @@ def main(state, outputs):
         pg.execute("""INSERT INTO monthly
             SELECT review_month, area, COUNT(*), COUNT(*) FILTER (WHERE intent IN ('complaint','cancellation'))
             FROM reviews WHERE status='completed' GROUP BY review_month, area""")
-        saved = {
-            "memo_md": {"markdown": (out / "memo.md").read_text()} if (out / "memo.md").exists() else None,
-            "memo_check": maybe_json(out / "memo_check.json"),
-            "evidence_pack": maybe_json(out / "evidence_pack.json"),
-            "verify_report": maybe_json(out / "verify_report.json"),
-            "run_summary": maybe_json(out / "run_summary.json"),
-            "golden_eval": maybe_json("evals/golden_eval/summary.json"),
-            "planted_gross": maybe_json("evals/planted_error/gross/planted_error_results.json"),
-            "planted_subtle": maybe_json("evals/planted_error/subtle/planted_error_results.json"),
-            "injection": maybe_json("evals/injection/injection_results.json"),
-            "failure_paths": maybe_json("evals/failure_paths/failure_path_results.json"),
-            "cost_checkpoints": maybe_json("cost/checkpoints.json"),
-            "cost_pilot_runs": maybe_json("cost/pilot_runs.json"),
-            "full_run_cost": {"by_run": [dict(r) for r in src.execute(
-                "SELECT run_id, phase, role, COUNT(*) AS calls, SUM(outcome='failed') AS failed,"
-                " ROUND(SUM(cost_usd), 4) AS cost_usd FROM calls GROUP BY run_id, phase, role ORDER BY MIN(call_id)")]},
-        }
+        saved = saved_outputs(out, src)
         for k, v in saved.items():
             if v is not None:
                 pg.execute("INSERT INTO outputs VALUES (%s, %s)", (k, json.dumps(v)))
@@ -143,5 +180,6 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--state", required=True)
     ap.add_argument("--outputs", required=True)
+    ap.add_argument("--outputs-only", action="store_true", help="refresh issues/claims/outputs; keep the reviews table")
     a = ap.parse_args()
-    main(a.state, a.outputs)
+    (refresh_outputs if a.outputs_only else main)(a.state, a.outputs)

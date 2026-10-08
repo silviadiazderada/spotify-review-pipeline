@@ -1,0 +1,63 @@
+{
+  "run_id": "full-final-v7",
+  "phase": "resume",
+  "input": "data/raw/spotify_reviews_18months.csv",
+  "state": "state/full.sqlite",
+  "label_config": "gpt-6-luna+effort-none+enrich-v1+schema-v1",
+  "budget_usd": 1.0,
+  "workers": 16,
+  "wall_clock_s": 58.95,
+  "total_cost_usd": 0.021502,
+  "stop_reason": null,
+  "stages": {
+    "enrich": {
+      "seconds": 12.41,
+      "distinct_texts_to_call": 0,
+      "already_completed_same_config": 660600,
+      "cache_hits_before_calls": 0,
+      "record_status": {
+        "completed": 660600,
+        "quarantined": 22
+      },
+      "stop_reason": null,
+      "calls": 0,
+      "failed_calls": 0,
+      "cost_usd": 0
+    },
+    "verify": {
+      "seconds": 2.69,
+      "sampled": 2000,
+      "verified": 2000,
+      "calls": 0,
+      "failed_calls": 0,
+      "cost_usd": 0
+    },
+    "export_records": {
+      "seconds": 5.53,
+      "counts": {
+        "completed": 660600,
+        "quarantined:invalid_model_output_after_retry": 9,
+        "quarantined:empty_review_text": 13
+      }
+    },
+    "group": {
+      "seconds": 6.26,
+      "issues": 40,
+      "members": 296981,
+      "calls": 0,
+      "failed_calls": 0,
+      "cost_usd": 0
+    },
+    "rank": {
+      "seconds": 2.22,
+      "issues_ranked": 40
+    },
+    "memo": {
+      "seconds": 29.21,
+      "check_passed": true,
+      "calls": 1,
+      "failed_calls": 0,
+      "cost_usd": 0.021502
+    }
+  }
+}

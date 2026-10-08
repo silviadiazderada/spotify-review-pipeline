@@ -2,7 +2,10 @@
 
 **Question.** Where should Spotify put the next quarter of product effort: access, usability, playback, or billing/support?
 
-**Answer.** **Usability.** Start with interruptive ads, then shuffle and skip restrictions. **Billing/support** is a close and rising alternative (see the [decision memo](#decision-memo)).
+**Answer.** **Usability.** Start with interruptive ads, then shuffle and skip restrictions, and coordinate with billing on Premium-gated basics.
+
+- **Robust core:** the **free-tier experience** (ads + Premium-locked basic controls) is the largest fixable problem, at 30.4% of complaints, whichever area owns it.
+- **Caveat:** usability leads 4 of 6 ranking scenarios. Billing/support leads in the most recent window and when free-tier restrictions are filed under billing. See the [decision memo](#decision-memo).
 
 The recommendation comes from a multi-agent pipeline that classified **660,600 of 660,609** non-empty Google Play reviews (May 2022 – Nov 2023) for **$13.31** of model spend.
 
@@ -21,10 +24,11 @@ The recommendation comes from a multi-agent pipeline that classified **660,600 o
 | Quarantined | 13 `empty_review_text` + 9 `invalid_model_output_after_retry` | [failure case below](#one-failed-case) |
 | Exact-text reuse | 176,420 rows (27%) reused a validated result. Model work drops from 660,609 to **484,189** distinct texts. The checker confirms all 176,420 reuses as valid. | `cache_source_id` in records |
 | Golden-50 agreement (human labels) | intent **84%**, topic **70%**, severity **74%** (MAE 0.32), sentiment **92%** within ±0.5, quotes 50/50 exact | [`evals/golden_eval/`](evals/golden_eval/) |
-| Independent verifier (2,000 random texts) | intent **94.4%**, topic **86.7%**, severity **89.9%** (MAE 0.11). 464 texts with any disagreement. | [`runs/full-final-v6/verify_report.json`](runs/full-final-v6/verify_report.json) |
+| Independent verifier (2,000 random texts) | intent **94.4%**, topic **86.7%**, severity **89.9%** (MAE 0.11). 464 texts with any disagreement. | [`runs/full-final-v7/verify_report.json`](runs/full-final-v7/verify_report.json) |
 | System tests | planted errors 10/10 gross, 8/10 subtle · prompt injection 9/9 · failure paths 10/10 | [`evals/`](evals/) |
 | 100-review pilot (measured) | cold: **$0.0178**, 64.7 s · warm: **0 calls**, 0.51 s, byte-identical outputs | [`cost/report.md`](cost/report.md) |
 | Full run: estimate vs. actual | estimated **$13.16** (from the 10k checkpoint) · actual **$13.31** | [`cost/report.md` §3–4](cost/report.md) |
+| Memo audit | **63/63** numbers traced to an independent recomputation; 0 problems | [`evals/memo_audit.md`](evals/memo_audit.md) |
 | Interruption / resume | 58,819 → 70,288 completed IDs. 0 re-sent. Recorded on video. | [`grading/checkpoint_*.json`](grading/), [video](evidence/resume_demo_redacted.mp4) |
 
 All numbers above are measured. The only estimates are the projections in `cost/report.md`, and they are labelled as such.
@@ -132,7 +136,7 @@ uv run python -m pipeline checkpoint --state state/run.sqlite --out checkpoint.j
 **Dashboard.**
 
 ```sh
-uv run python scripts/load_db.py --state state/full.sqlite --outputs runs/full-final-v6
+uv run python scripts/load_db.py --state state/full.sqlite --outputs runs/full-final-v7
 cd dashboard && npm install && npm run dev    # needs DATABASE_URL in dashboard/.env.local
 ```
 
@@ -144,10 +148,10 @@ cd dashboard && npm install && npm run dev    # needs DATABASE_URL in dashboard/
 |---|---|
 | **D1** Accessible code/setup and artifacts | This README · [`pyproject.toml`](pyproject.toml), [`uv.lock`](uv.lock) · [`.env.example`](.env.example) · offline commands above · [`grading/`](grading/) · [`cost/`](cost/) |
 | **D2** Architecture, shared schema, provenance | [Architecture](#architecture) · schema in [`pipeline/enrich.py`](pipeline/enrich.py) · `label_config` and `source_sha256` on every record · `cache_source_id` provenance · [`pipeline/config.py`](pipeline/config.py) versions |
-| **D3** Memo numbers linked to calculations and evidence | [`runs/full-final-v6/claims.csv`](runs/full-final-v6/claims.csv) · [`memo_check.json`](runs/full-final-v6/memo_check.json) (passed) · the checker recomputes every claim · [trace](#one-review-end-to-end) |
-| **D4** Recommendation, alternatives, limitations | [Decision memo](#decision-memo) · [`memo.md`](runs/full-final-v6/memo.md) · [Limitations](#limitations) |
+| **D3** Memo numbers linked to calculations and evidence | **[`evals/memo_audit.md`](evals/memo_audit.md)**: an independent recomputation (no pipeline database, no model) traces **63/63** memo numbers, matches 32/32 claims and 42/42 evidence-pack fields, and finds 3/3 quotes verbatim · [`claims.csv`](runs/full-final-v7/claims.csv) · [`memo_check.json`](runs/full-final-v7/memo_check.json), an in-pipeline check that the number before each claim ID equals that claim · the course checker recomputes every claim · [trace](#one-review-end-to-end) |
+| **D4** Recommendation, alternatives, limitations | [Decision memo](#decision-memo) · [`memo.md`](runs/full-final-v7/memo.md): recommendation, robustness test across 6 scenarios, alternatives with what would change the decision, concrete first steps, limitations including volume spikes · [Limitations](#limitations) |
 | **T1** 50 human labels, per-field results, error analysis | [`evals/golden_50_human.csv`](evals/golden_50_human.csv) · [`evals/golden_eval/report.md`](evals/golden_eval/report.md) · [`error_analysis.md`](evals/golden_eval/error_analysis.md) |
-| **T2** Independent verification, planted errors, injection | [`verify_report.json`](runs/full-final-v6/verify_report.json), [`verify_comparisons.csv`](runs/full-final-v6/verify_comparisons.csv) · [`evals/planted_error/`](evals/planted_error/) · [`evals/injection/`](evals/injection/) |
+| **T2** Independent verification, planted errors, injection | [`verify_report.json`](runs/full-final-v7/verify_report.json), [`verify_comparisons.csv`](runs/full-final-v7/verify_comparisons.csv) · [`evals/planted_error/`](evals/planted_error/) · [`evals/injection/`](evals/injection/) |
 | **T3** Real cold/warm pilot, calculator, retry/spend/recovery controls | [`cost/report.md`](cost/report.md), [`cost/README.md`](cost/README.md) · [`evals/failure_paths/`](evals/failure_paths/) · [resume video](evidence/resume_demo_redacted.mp4) |
 | **W1** Full ingestion, coverage, classification | [`grading/`](grading/) · [`evals/self-check.json`](evals/self-check.json) (coverage candidate 1.0) |
 | **W2** Staged program, bounded calls, saved handoffs, resume | [`pipeline/`](pipeline/) · [`grading/calls.jsonl`](grading/calls.jsonl) (≤50 IDs per enrich call) · `checkpoint_before/after.json` + video |
@@ -214,7 +218,7 @@ Other real failures, and how we handled them, are recorded in [D10–D12](docs/D
 
 ## Decision memo
 
-The memo is AI-written by `gpt-6.1-sol` from the saved aggregates only, and code-checked: [full text](runs/full-final-v6/memo.md). Every issue-level number cites a row of [`claims.csv`](runs/full-final-v6/claims.csv), which the course checker recomputes from the saved records.
+The memo is AI-written by `gpt-6.1-sol` from the saved aggregates only, and code-checked: [full text](runs/full-final-v7/memo.md). Every issue-level number cites a row of [`claims.csv`](runs/full-final-v7/claims.csv), which the course checker recomputes from the saved records.
 
 **Priority: usability.** Fix interruptive ads first, then shuffle and skip restrictions.
 
@@ -237,6 +241,28 @@ The memo is AI-written by `gpt-6.1-sol` from the saved aggregates only, and code
 | 7 | `ISS-playback-crashes_wont_open`: Crashes / app won't open | 7,779 | 3.588508 | 27,915 | C025–C028 |
 
 Rank 1 is `ISS-other-general` (generic "worst app"-type complaints, 88,142, C001–C004). It has no specific defect to fix.
+
+**How robust is this choice?** These are severity-weighted complaints in the four areas, computed in code ([`memo.py: robustness`](pipeline/memo.py)) and independently re-verified in the audit.
+
+| Scenario | Leader | Usability | Billing/support | Playback | Access |
+|---|---|---|---|---|---|
+| Baseline (severity sum) | **Usability** | **206,128** | 149,237 | 151,675 | 39,433 |
+| Complaint count only | **Usability** | **81,280** | 52,582 | 45,844 | 10,186 |
+| Excluding the Jul 6–9 and Oct 2023 spikes | **Usability** | **171,260** | 84,449 | 137,103 | 34,388 |
+| Free-tier restrictions counted as usability | **Usability** | **322,377** | 32,988 | 151,675 | 39,433 |
+| Free-tier restrictions counted as billing | Billing/support | 163,415 | **191,950** | 151,675 | 39,433 |
+| Latest window only (May–Oct 2023) | Billing/support | 88,957 | **98,180** | 49,395 | 22,154 |
+
+**The forced single-area answer is usability**, by the baseline rule and in 4 of 6 scenarios. That answer depends on the taxonomy boundary and on the time window.
+
+**What holds in every view:**
+- The free-tier experience (ads + Premium-locked basics) is the biggest problem: 90,377 complaints, severity sum 236,515, 30.4% of all complaints.
+- Usability should lead it **jointly with billing**, which owns the entitlement policy.
+
+The memo's **first steps:**
+1. Investigate ad frequency and back-to-back placements (`ISS-usability-ads`).
+2. Reproduce forced shuffle and skip limits, and separate intended restrictions from defects (`ISS-usability-shuffle_skip_limits`).
+3. Map expected versus available controls in a joint review of `ISS-billing-basic_features_paywalled` and `ISS-billing-premium_only_controls`.
 
 **Volume spikes.** Two events explain most of the rise in "outside the four areas": a review-bombing burst on Jul 6–9, 2023 and an update backlash in Oct 2023. See [Limitations](#limitations); the memo explains both with code-computed numbers.
 

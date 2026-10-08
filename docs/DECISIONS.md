@@ -347,3 +347,38 @@ Neither change alters any label.
    - The trend chart now explains both spikes.
 
 **Implication:** the later window's four-area shares are diluted by these events. The four-area comparison (e.g. billing/support rising from 11.1% to 20.6%) is more informative than the "outside" share.
+
+## D14: Strengthening D3 (traceability) and D4 (coherence), 2026-10-08
+
+**D4: robustness test of the recommendation.**
+
+`memo.robustness()` ranks the four areas under 6 code-defined scenarios:
+
+| Scenario | Leader |
+|---|---|
+| Baseline severity sum | Usability |
+| Complaint count only | Usability |
+| Excluding the two spike events | Usability |
+| Free-tier restrictions counted as usability | Usability |
+| Free-tier restrictions counted as billing | **Billing/support** |
+| Latest window May–Oct 2023 | **Billing/support** |
+
+- Usability leads 4 of 6, so the single-area answer depends on the taxonomy boundary and the time window.
+- The finding that holds everywhere: the combined free-tier experience theme (ads + Premium-locked basics) is 30.4% of complaints (90,377 records, severity sum 236,515).
+- Memo prompt **v3** adds two required sections:
+  - **"How robust is this choice"**: report each scenario, and name and quantify the ones the recommended area does not win.
+  - **"What to do first"**: 2–4 issue-linked steps, with no predicted outcomes.
+- Run `full-final-v7` used 1 memo call ($0.02). The check passed.
+
+**D3: a stricter in-pipeline check plus an independent audit.**
+
+- `memo.check` now requires the number immediately before each `[Cxxx]` to equal that claim's value. A unit test confirms that a wrong number next to a valid claim ID is rejected.
+- `scripts/audit_memo.py` recomputes everything from the grading export and the raw CSV only, with no pipeline database or model call. It traces each memo number to a claim or to a recomputed fact, checks the evidence pack the memo agent saw, and checks quotes verbatim.
+  - Result: **63/63 numbers traced and correct, 32/32 claims, 42/42 pack fields, 3/3 quotes, 0 problems.**
+  - Output: `evals/memo_audit.md`.
+
+**Database refresh.**
+
+- A full reload (drop and re-COPY of 660k rows) failed twice, with Neon closing the connection after about 13 minutes. Reads and small writes kept working, and the live site kept serving the previous version, because the load is a single all-or-nothing transaction.
+- Added `load_db.py --outputs-only`, which refreshes only issues, claims and outputs and refuses to run if membership changed. It succeeded in seconds; the earlier hang was transient on the provider side.
+- The reviews table is unchanged, since membership and labels are identical to v4.

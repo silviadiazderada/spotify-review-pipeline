@@ -23,6 +23,9 @@ AREAS = {"access": "access", "usability": "usability", "playback": "playback", "
 # Cross-area themes (code-defined, documented): the shared taxonomy splits free-tier restrictions between
 # billing (Premium-locked controls, paywalls) and usability (shuffle/skip limits, ads).
 THEMES = {
+    "free_tier_experience_ads_plus_restrictions": ["ISS-usability-ads", "ISS-billing-premium_only_controls",
+                                                  "ISS-billing-basic_features_paywalled",
+                                                  "ISS-usability-shuffle_skip_limits"],
     "free_tier_restrictions": ["ISS-billing-premium_only_controls", "ISS-billing-basic_features_paywalled",
                                "ISS-usability-shuffle_skip_limits"],
     "ads": ["ISS-usability-ads"],
@@ -63,6 +66,42 @@ def spike_events(con):
     }
 
 
+FOUR_AREAS = ("usability", "billing/support", "playback", "access")
+
+
+def robustness(con, membership):
+    """Does the top decision area survive reasonable alternative ranking choices? (code-computed scenarios)"""
+    free = set(THEMES["free_tier_restrictions"])
+    scen = {k: {a: 0 for a in FOUR_AREAS} for k in (
+        "baseline_severity_sum", "complaint_count_only", "excluding_spike_events", "latest_window_May_Oct_2023",
+        "free_tier_restrictions_counted_as_billing", "free_tier_restrictions_counted_as_usability")}
+    for rid, topic, sev, d in con.execute(
+            "SELECT review_id, topic, severity, substr(review_timestamp,1,10) FROM records WHERE status='completed'"
+            " AND intent IN ('complaint','cancellation')"):
+        a = AREAS[topic]
+        iss = membership.get(rid)
+        spike = "2023-07-06" <= d <= "2023-07-09" or d[:7] == "2023-10"
+        for key, area, add in (
+                ("baseline_severity_sum", a, sev), ("complaint_count_only", a, 1),
+                ("excluding_spike_events", a, 0 if spike else sev),
+                ("latest_window_May_Oct_2023", a, sev if "2023-05" <= d[:7] <= "2023-10" else 0),
+                ("free_tier_restrictions_counted_as_billing", "billing/support" if iss in free else a, sev),
+                ("free_tier_restrictions_counted_as_usability", "usability" if iss in free else a, sev)):
+            if area in scen[key]:
+                scen[key][area] += add
+    out = {}
+    for key, vals in scen.items():
+        order = sorted(FOUR_AREAS, key=lambda x: -vals[x])
+        out[key] = {"leader": order[0], "runner_up": order[1], **{a: vals[a] for a in order}}
+    leaders = [v["leader"] for v in out.values()]
+    return {"note": "Severity sums (or counts) over complaint/cancellation records in the four decision areas under "
+                    "alternative ranking choices; 'outside the four areas' is excluded.",
+            "scenarios": out,
+            "scenarios_led_by_usability": leaders.count("usability"),
+            "scenarios_led_by_billing_support": leaders.count("billing/support"),
+            "scenarios_total": len(leaders)}
+
+
 UUID = re.compile(r"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}")
 CLAIM = re.compile(r"\[(C\d{3})\]")
 ISSUE = re.compile(r"ISS-[a-z]+-[a-z_]+")
@@ -82,7 +121,7 @@ def build_claims(ranking, top_n):
     return claims
 
 
-def build_pack(con, ranking, issues, claims, verify_report, records_counts):
+def build_pack(con, ranking, issues, claims, verify_report, records_counts, membership=None):
     completed = con.execute("SELECT COUNT(*) FROM records WHERE status='completed'").fetchone()[0]
     total = con.execute("SELECT COUNT(*) FROM records").fetchone()[0]
     intents = Counter(r[0] for r in con.execute("SELECT intent FROM records WHERE status='completed'"))
@@ -147,6 +186,7 @@ def build_pack(con, ranking, issues, claims, verify_report, records_counts):
                     "and ads under usability; these code-defined themes add up the related issues across areas.",
             **themes},
         "volume_spikes": spike_events(con),
+        "robustness_of_top_area": robustness(con, membership or {}),
         "trend_comparable_periods": {
             "note": "Shares among completed reviews in two comparable 6-month windows; first and last calendar months "
                     "of the data are partial and excluded. Review volume is self-selected and varies by month.",
@@ -164,6 +204,16 @@ def check(memo, pack, claims, ranking):
     pack_text = json.dumps(pack, ensure_ascii=False)
     pack_ids = set(UUID.findall(pack_text))
     problems += [f"review ID not in evidence pack: {r}" for r in sorted(set(UUID.findall(memo)) - pack_ids)]
+    by_id = {c["claim_id"]: c for c in claims}
+    for m in re.finditer(r"\[(C\d{3})\]", memo):
+        c = by_id.get(m.group(1))
+        if not c:
+            continue
+        before = UUID.sub(" ", ISSUE.sub(" ", memo[max(0, m.start() - 80):m.start()]))
+        nums = NUMBER.findall(CLAIM.sub(" ", before))
+        if not nums or nums[-1].replace(",", "") != c["value"]:
+            problems.append(f"{c['claim_id']} cites {c['metric']}={c['value']} but the preceding number is "
+                            f"{nums[-1] if nums else 'missing'}")
     valid_issues = {r["issue_id"] for r in ranking}
     problems += [f"unknown issue ID {i}" for i in sorted(set(ISSUE.findall(memo)) - valid_issues)]
     # Numbers: strip IDs first, then every number must appear verbatim in the pack (small integers allowed).
@@ -182,7 +232,8 @@ def run(con, client, run_id, phase, budget, out_dir, ranking, issues, verify_rep
         w = csv.DictWriter(f, fieldnames=["claim_id", "issue_id", "metric", "value"])
         w.writeheader()
         w.writerows(claims)
-    pack = build_pack(con, ranking, issues, claims, verify_report, records_counts)
+    membership = {m["review_id"]: m["issue_id"] for m in csv.DictReader((out_dir / "membership.csv").open())}
+    pack = build_pack(con, ranking, issues, claims, verify_report, records_counts, membership)
     (out_dir / "evidence_pack.json").write_text(json.dumps(pack, indent=2, ensure_ascii=False))
     payload = json.dumps(pack, ensure_ascii=False)
     key = llm.input_hash("memo", MEMO_CONFIG, payload)

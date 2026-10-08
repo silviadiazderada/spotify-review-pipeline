@@ -11,6 +11,7 @@ type Ev = {
   planted_subtle: { planted: number; detected: number } | null;
   injection: { passed: boolean; cases: unknown[] } | null;
   failure_paths: { passed: number; total: number } | null;
+  memo_audit: { numbers: number; traced_ok: number; problems: string[] } | null;
   full_run_cost: { by_run: { run_id: string; phase: string; role: string; calls: number; failed: number; cost_usd: number }[] } | null;
 };
 
@@ -73,6 +74,8 @@ export default function MethodPage() {
             {data.planted_gross && <tr><td>Planted wrong labels caught (gross)</td><td className="num">{data.planted_gross.detected}/{data.planted_gross.planted}</td></tr>}
             {data.planted_subtle && <tr><td>Planted wrong labels caught (subtle topic shift)</td><td className="num">{data.planted_subtle.detected}/{data.planted_subtle.planted}</td></tr>}
             {data.injection && <tr><td>Prompt-injection test (9 synthetic reviews)</td><td className="num">{data.injection.passed ? "passed" : "failed"}</td></tr>}
+            {data.memo_audit && <tr><td>Memo audit: numbers traced to an independent recomputation</td>
+              <td className="num">{data.memo_audit.traced_ok}/{data.memo_audit.numbers}</td></tr>}
             {data.failure_paths && <tr><td>Failure-path scenarios (simulated provider)</td><td className="num">{data.failure_paths.passed}/{data.failure_paths.total}</td></tr>}
           </tbody></table>
         </section>

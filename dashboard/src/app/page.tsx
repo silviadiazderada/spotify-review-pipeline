@@ -12,6 +12,8 @@ type Overview = {
     complaints_share_of_completed: string;
     cancellation_intent_records: number;
     cross_area_themes?: Record<string, { complaint_records: number; severity_sum: number; share_of_complaints: string; issues: string[] } | string>;
+    robustness_of_top_area?: { scenarios_led_by_usability: number; scenarios_total: number;
+      scenarios: Record<string, Record<string, number | string>> };
     volume_spikes?: { average_reviews_per_day_whole_period: number;
       "Jul 6-9 2023": { reviews: number; outside_area_complaints: number; reviews_mentioning_sweden_quran_islam_or_boycott: number };
       "Oct 2023": { outside_area_complaints: number; share_mentioning_update_or_version: string; same_share_Jan_Jun_2023: string } };
@@ -85,6 +87,30 @@ export default function OverviewPage() {
           </p>
         </section>
       </div>
+
+      {d.pack?.robustness_of_top_area && (() => {
+        const r = d.pack.robustness_of_top_area!;
+        const areas = ["usability", "billing/support", "playback", "access"];
+        const label = (k: string) => k.replace(/_/g, " ").replace("May Oct", "May–Oct");
+        return (
+          <section className="card">
+            <h2>How robust is the recommendation?</h2>
+            <p className="note">Severity-weighted complaints in the four decision areas under alternative ranking choices (computed in code).
+              Usability leads <strong>{r.scenarios_led_by_usability} of {r.scenarios_total}</strong>; where it does not, billing/support leads.
+              What holds in every view: the free-tier experience (ads + Premium-locked basics) is the largest problem, whichever area owns it.</p>
+            <div className="table-wrap"><table>
+              <thead><tr><th>Scenario</th><th>Leader</th>{areas.map((a) => <th key={a} className="num">{a}</th>)}</tr></thead>
+              <tbody>{Object.entries(r.scenarios).map(([k, v]) => (
+                <tr key={k}>
+                  <td>{label(k)}</td>
+                  <td><strong>{String(v.leader)}</strong></td>
+                  {areas.map((a) => <td key={a} className="num" style={{ fontWeight: v.leader === a ? 700 : 400 }}>{fmt(v[a] as number)}</td>)}
+                </tr>
+              ))}</tbody>
+            </table></div>
+          </section>
+        );
+      })()}
 
       {periods.length === 2 && (
         <section className="card">
